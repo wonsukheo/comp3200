@@ -41,7 +41,7 @@ namespace lab2
 	void PrintMaxFloat(std::istream& in, std::ostream& out)
 	{
 		float num;
-		float max = 0.0;
+		float max = LLONG_MIN;
 		string discard;
 
 		while (true)
@@ -51,7 +51,7 @@ namespace lab2
 			if (!in.fail())
 			{
 				out << setw(5) << ' '
-					<< setw(14) << showpos << showpoint << fixed << setprecision(3) << internal << num << endl;
+					<< setw(15) << showpos << showpoint << fixed << setprecision(3) << internal << num << endl;
 
 				if (num > max)
 				{
@@ -64,7 +64,7 @@ namespace lab2
 			if (in.eof())
 			{
 				out << setw(5) << left << "max:"
-					<< setw(14) << showpos << showpoint << fixed << setprecision(3) << internal << max << endl;
+					<< setw(15) << showpos << showpoint << fixed << setprecision(3) << internal << max << endl;
 
 				break;
 			}
