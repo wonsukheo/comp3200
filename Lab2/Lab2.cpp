@@ -10,8 +10,9 @@ namespace lab2
 	{
 		out << setw(12) << "oct" << setw(11) << "dec" << setw(9) << "hex" << endl;
 
-		out << setw(13) << setfill('-') << ' ' << setw(11) << setfill('-')
-			<< ' ' << setw(9) << setfill('-') << '\n';
+		out << setfill('-');
+
+		out << setw(13) << ' ' << setw(11) << ' ' << setw(9) << '\n';
 
 		out << setfill(' ');
 
@@ -44,14 +45,15 @@ namespace lab2
 		float max = LLONG_MIN;
 		string discard;
 
+		out << showpos << showpoint << setprecision(3) << fixed;
+
 		while (true)
 		{
 			in >> num;
 
 			if (!in.fail())
 			{
-				out << setw(5) << ' '
-					<< setw(15) << showpos << showpoint << fixed << setprecision(3) << internal << num << endl;
+				out << setw(5) << ' ' << setw(15) << internal << num << endl;
 
 				if (num > max)
 				{
@@ -63,14 +65,12 @@ namespace lab2
 
 			if (in.eof())
 			{
-				out << setw(5) << left << "max:"
-					<< setw(15) << showpos << showpoint << fixed << setprecision(3) << internal << max << endl;
+				out << setw(5) << left << "max:" << setw(15) << internal << max << endl;
 
 				break;
 			}
 
 			in.clear();
-			in >> std::ws;
 
 			in >> discard;
 		}
