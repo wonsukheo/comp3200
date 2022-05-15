@@ -18,8 +18,8 @@ namespace lab2
 
 		int num;
 		string discard;
-		
- 		while (true)
+
+		while (true)
 		{
 			in >> num;
 
@@ -35,7 +35,7 @@ namespace lab2
 			}
 
 			in.clear();
-			in >> discard;			
+			in >> discard;
 		}
 	}
 
