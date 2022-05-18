@@ -15,7 +15,6 @@ namespace lab3
 		int GetTotalTime() const;
 		float GetAverageTime() const;
 		float GetStandardDeviation() const;
-		float static MySqrt(float num);
 		const std::string& GetName() const;
 
 	private:
@@ -25,6 +24,3 @@ namespace lab3
 		unsigned int* mWorkHours;
 	};
 }
-
-
-// q1) const char* mName?

@@ -4,114 +4,117 @@
 
 namespace lab3
 {
-    TimeSheet::TimeSheet(const char* name, unsigned int maxEntries)
-        :mMaxEntries(maxEntries)
-        ,mEntryCount(0)
-    {
-        mName = new char[strlen(name) + 1];
-        strcpy(mName, name);
+	TimeSheet::TimeSheet(const char* name, unsigned int maxEntries)
+		: mMaxEntries(maxEntries)
+		, mEntryCount(0)
+	{
+		mName = new char[strlen(name) + 1];
+		strcpy(mName, name);
 
-        mWorkHours = new unsigned int[mMaxEntries];
-    }
+		mWorkHours = new unsigned int[mMaxEntries];
+	}
 
-    TimeSheet::TimeSheet(const TimeSheet& other)
-        :mMaxEntries(other.mMaxEntries)
-        ,mEntryCount(other.mEntryCount)
-    {
-        mName = new char[strlen(other.mName) + 1];
-        strcpy(mName, other.mName);
+	TimeSheet::TimeSheet(const TimeSheet& other)
+		: mMaxEntries(other.mMaxEntries)
+		, mEntryCount(other.mEntryCount)
+	{
+		mName = new char[strlen(other.mName) + 1];
+		strcpy(mName, other.mName);
 
-        mWorkHours = new unsigned int[mMaxEntries];
-        memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mMaxEntries);
-    }
+		mWorkHours = new unsigned int[mMaxEntries];
+		memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mEntryCount);
+	}
 
-    TimeSheet::~TimeSheet()
-    {
-        delete[] mName;
-        delete[] mWorkHours;
-    }
+	TimeSheet::~TimeSheet()
+	{
+		delete[] mName;
+		delete[] mWorkHours;
+	}
 
-    TimeSheet& TimeSheet::operator=(const TimeSheet& other)
-    {
-        mMaxEntries = other.mMaxEntries;
-        mEntryCount = other.mEntryCount;
+	TimeSheet& TimeSheet::operator=(const TimeSheet& other)
+	{
+		mMaxEntries = other.mMaxEntries;
+		mEntryCount = other.mEntryCount;
 
-        mName = new char[strlen(other.mName) + 1];
-        strcpy(mName, other.mName);
+		delete[] mName;
+		delete[] mWorkHours;
 
-        mWorkHours = new unsigned int[mMaxEntries];
-        memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mMaxEntries);
+		mName = new char[strlen(other.mName) + 1];
+		strcpy(mName, other.mName);
 
-        return *this;
-    }
+		mWorkHours = new unsigned int[mMaxEntries];
+		memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mMaxEntries);
 
-    void TimeSheet::AddTime(int timeInHours)
-    {
-        if (timeInHours < 1 || timeInHours > 10) {
-            return;
-        }
+		return *this;
+	}
 
-        if (mEntryCount == mMaxEntries) {
-            return;
-        }
+	void TimeSheet::AddTime(int timeInHours)
+	{
+		if (timeInHours < 1 || timeInHours > 10) {
+			return;
+		}
 
-        mWorkHours[mEntryCount++] = (unsigned int)timeInHours;
-    }
+		if (mEntryCount == mMaxEntries) {
+			return;
+		}
 
-    int TimeSheet::GetTimeEntry(unsigned int index) const
-    {
-        if (mEntryCount == 0 || index >= mEntryCount) {
-            return -1;
-        }
+		mWorkHours[mEntryCount++] = (unsigned int)timeInHours;
+	}
 
-        return mWorkHours[index];
-    }
+	int TimeSheet::GetTimeEntry(unsigned int index) const
+	{
+		if (mEntryCount == 0 || index >= mEntryCount) {
+			return -1;
+		}
 
-    int TimeSheet::GetTotalTime() const
-    {
-        int sum = 0;
-        unsigned int* p = mWorkHours;
+		return mWorkHours[index];
+	}
 
-        while (p - mWorkHours < (int)mEntryCount)
-        {
-            sum += *p++;
-        }
+	int TimeSheet::GetTotalTime() const
+	{
+		int sum = 0;
+		unsigned int* p = mWorkHours;
 
-        return sum;
-    }
+		while (p - mWorkHours < (int)mEntryCount)
+		{
+			sum += *p++;
+		}
 
-    float TimeSheet::GetAverageTime() const
-    {
-        return mEntryCount == 0 ? 0.0f : (float)GetTotalTime() / mEntryCount;
-    }
+		return sum;
+	}
 
-    float TimeSheet::GetStandardDeviation() const
-    {
-        if (mEntryCount == 0) {
-            return 0.0f;
-        }
+	float TimeSheet::GetAverageTime() const
+	{
+		return mEntryCount == 0 ? 0.0f : (float)GetTotalTime() / mEntryCount;
+	}
 
-        float avg = GetAverageTime();
+	float TimeSheet::GetStandardDeviation() const
+	{
+		if (mEntryCount == 0) {
+			return 0.0f;
+		}
 
-        float variance = 0.0f;
+		float avg = GetAverageTime();
 
-        unsigned int* p = mWorkHours;
+		float variance = 0.0f;
 
-        while (p - mWorkHours < (int)mEntryCount)
-        {
-            variance += (*p - avg) * (*p - avg);
-            ++p;
-        }
+		unsigned int* p = mWorkHours;
 
-        variance /= mEntryCount;
+		while (p - mWorkHours < (int)mEntryCount)
+		{
+			variance += (*p - avg) * (*p - avg);
+			++p;
+		}
 
-        return sqrt(variance);
-    }
-    
-    const std::string& TimeSheet::GetName() const
-    {
-        std::string* s = new std::string(mName);
+		variance /= mEntryCount;
 
-        return *s;
-    }
+		return sqrt(variance);
+	}
+
+	const std::string& TimeSheet::GetName() const
+	{
+		std::string* s = new std::string(mName);
+
+		return *s;
+	}
 }
