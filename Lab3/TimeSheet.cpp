@@ -48,6 +48,7 @@ namespace lab3
 
 		delete[] mName;
 		delete[] mWorkHours;
+		delete[] mNameString;
 
 		mName = new char[strlen(other.mName) + 1];
 		strcpy(mName, other.mName);
@@ -62,7 +63,7 @@ namespace lab3
 
 	void TimeSheet::AddTime(int timeInHours)
 	{
-	    if (timeInHours < 1 || timeInHours > 10)
+		if (timeInHours < 1 || timeInHours > 10)
 		{
 			return;
 		}
@@ -72,7 +73,7 @@ namespace lab3
 			return;
 		}
 
-		mWorkHours[mEntryCount++] = (unsigned int) timeInHours;
+		mWorkHours[mEntryCount++] = (unsigned int)timeInHours;
 	}
 
 	int TimeSheet::GetTimeEntry(unsigned int index) const
@@ -90,7 +91,7 @@ namespace lab3
 		int sum = 0;
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < (int) mEntryCount)
+		while (p - mWorkHours < (int)mEntryCount)
 		{
 			sum += *p++;
 		}
@@ -100,7 +101,7 @@ namespace lab3
 
 	float TimeSheet::GetAverageTime() const
 	{
-		return mEntryCount == 0 ? 0.0f : (float) GetTotalTime() / mEntryCount;
+		return mEntryCount == 0 ? 0.0f : (float)GetTotalTime() / mEntryCount;
 	}
 
 	float TimeSheet::GetStandardDeviation() const
