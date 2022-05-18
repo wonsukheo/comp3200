@@ -62,20 +62,23 @@ namespace lab3
 
 	void TimeSheet::AddTime(int timeInHours)
 	{
-		if (timeInHours < 1 || timeInHours > 10) {
+	    if (timeInHours < 1 || timeInHours > 10)
+		{
 			return;
 		}
 
-		if (mEntryCount == mMaxEntries) {
+		if (mEntryCount == mMaxEntries)
+		{
 			return;
 		}
 
-		mWorkHours[mEntryCount++] = (unsigned int)timeInHours;
+		mWorkHours[mEntryCount++] = (unsigned int) timeInHours;
 	}
 
 	int TimeSheet::GetTimeEntry(unsigned int index) const
 	{
-		if (mEntryCount == 0 || index >= mEntryCount) {
+		if (mEntryCount == 0 || index >= mEntryCount)
+		{
 			return -1;
 		}
 
@@ -87,7 +90,7 @@ namespace lab3
 		int sum = 0;
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < (int)mEntryCount)
+		while (p - mWorkHours < (int) mEntryCount)
 		{
 			sum += *p++;
 		}
@@ -97,12 +100,13 @@ namespace lab3
 
 	float TimeSheet::GetAverageTime() const
 	{
-		return mEntryCount == 0 ? 0.0f : (float)GetTotalTime() / mEntryCount;
+		return mEntryCount == 0 ? 0.0f : (float) GetTotalTime() / mEntryCount;
 	}
 
 	float TimeSheet::GetStandardDeviation() const
 	{
-		if (mEntryCount == 0) {
+		if (mEntryCount == 0)
+		{
 			return 0.0f;
 		}
 
@@ -112,7 +116,7 @@ namespace lab3
 
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < (int)mEntryCount)
+		while (p - mWorkHours < (int) mEntryCount)
 		{
 			variance += (*p - avg) * (*p - avg);
 			++p;

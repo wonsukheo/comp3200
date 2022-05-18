@@ -20,7 +20,7 @@ namespace lab3
 	private:
 		std::string* mNameString;
 		char* mName;
-	    unsigned int mMaxEntries;
+		unsigned int mMaxEntries;
 		unsigned int mEntryCount;
 		unsigned int* mWorkHours;
 	};
