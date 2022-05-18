@@ -1,6 +1,6 @@
 #include "TimeSheet.h"
 
-#include <cmath>
+#include <math.h>
 
 namespace lab3
 {
@@ -73,7 +73,7 @@ namespace lab3
 			return;
 		}
 
-		mWorkHours[mEntryCount++] = (unsigned int)timeInHours;
+		mWorkHours[mEntryCount++] = static_cast<unsigned int>(timeInHours);
 	}
 
 	int TimeSheet::GetTimeEntry(unsigned int index) const
@@ -91,7 +91,7 @@ namespace lab3
 		int sum = 0;
 		unsigned int* p = mWorkHours;
 
-	    while (p - mWorkHours < (int)mEntryCount)
+	    while (p - mWorkHours < static_cast<int>(mEntryCount))
 		{
 			sum += *p++;
 		}
@@ -101,7 +101,7 @@ namespace lab3
 
 	float TimeSheet::GetAverageTime() const
 	{
-	    return mEntryCount == 0 ? 0.0f : (float)GetTotalTime() / mEntryCount;
+	    return mEntryCount == 0 ? 0.0f : static_cast<float>(GetTotalTime()) / mEntryCount;
 	}
 
 	float TimeSheet::GetStandardDeviation() const
@@ -117,7 +117,7 @@ namespace lab3
 
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < (int)mEntryCount)
+		while (p - mWorkHours < static_cast<int>(mEntryCount))
 		{
 			variance += (*p - avg) * (*p - avg);
 			++p;
