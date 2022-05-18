@@ -91,7 +91,7 @@ namespace lab3
 		int sum = 0;
 		unsigned int* p = mWorkHours;
 
-	    while (p - mWorkHours < static_cast<int>(mEntryCount))
+		while (p - mWorkHours < static_cast<int>(mEntryCount))
 		{
 			sum += *p++;
 		}
@@ -101,7 +101,7 @@ namespace lab3
 
 	float TimeSheet::GetAverageTime() const
 	{
-	    return mEntryCount == 0 ? 0.0f : static_cast<float>(GetTotalTime()) / mEntryCount;
+		return mEntryCount == 0 ? 0.0f : static_cast<float>(GetTotalTime()) / mEntryCount;
 	}
 
 	float TimeSheet::GetStandardDeviation() const
@@ -125,7 +125,7 @@ namespace lab3
 
 		variance /= mEntryCount;
 
-		return sqrt(variance);
+		return static_cast<float>(sqrt(variance));
 	}
 
 	const std::string& TimeSheet::GetName() const
