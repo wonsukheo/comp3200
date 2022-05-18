@@ -18,6 +18,7 @@ namespace lab3
 		const std::string& GetName() const;
 
 	private:
+		std::string* mNameString;
 		char* mName;
 	    unsigned int mMaxEntries;
 		unsigned int mEntryCount;

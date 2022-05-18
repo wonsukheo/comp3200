@@ -11,6 +11,8 @@ namespace lab3
 		mName = new char[strlen(name) + 1];
 		strcpy(mName, name);
 
+		mNameString = new std::string(mName);
+
 		mWorkHours = new unsigned int[mMaxEntries];
 	}
 
@@ -21,6 +23,8 @@ namespace lab3
 		mName = new char[strlen(other.mName) + 1];
 		strcpy(mName, other.mName);
 
+		mNameString = new std::string(mName);
+
 		mWorkHours = new unsigned int[mMaxEntries];
 		memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mEntryCount);
 	}
@@ -29,10 +33,16 @@ namespace lab3
 	{
 		delete[] mName;
 		delete[] mWorkHours;
+		delete mNameString;
 	}
 
 	TimeSheet& TimeSheet::operator=(const TimeSheet& other)
 	{
+		if (this == &other)
+		{
+			return *this;
+		}
+
 		mMaxEntries = other.mMaxEntries;
 		mEntryCount = other.mEntryCount;
 
@@ -41,6 +51,8 @@ namespace lab3
 
 		mName = new char[strlen(other.mName) + 1];
 		strcpy(mName, other.mName);
+
+		mNameString = new std::string(mName);
 
 		mWorkHours = new unsigned int[mMaxEntries];
 		memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mMaxEntries);
@@ -113,8 +125,6 @@ namespace lab3
 
 	const std::string& TimeSheet::GetName() const
 	{
-		std::string* s = new std::string(mName);
-
-		return *s;
+		return *mNameString;
 	}
 }
