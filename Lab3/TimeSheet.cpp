@@ -48,7 +48,7 @@ namespace lab3
 
 		delete[] mName;
 		delete[] mWorkHours;
-		delete[] mNameString;
+		delete mNameString;
 
 		mName = new char[strlen(other.mName) + 1];
 		strcpy(mName, other.mName);
@@ -91,7 +91,7 @@ namespace lab3
 		int sum = 0;
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < (int)mEntryCount)
+	    while (p - mWorkHours < (int)mEntryCount)
 		{
 			sum += *p++;
 		}
@@ -101,7 +101,7 @@ namespace lab3
 
 	float TimeSheet::GetAverageTime() const
 	{
-		return mEntryCount == 0 ? 0.0f : (float)GetTotalTime() / mEntryCount;
+	    return mEntryCount == 0 ? 0.0f : (float)GetTotalTime() / mEntryCount;
 	}
 
 	float TimeSheet::GetStandardDeviation() const
@@ -117,7 +117,7 @@ namespace lab3
 
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < (int) mEntryCount)
+		while (p - mWorkHours < (int)mEntryCount)
 		{
 			variance += (*p - avg) * (*p - avg);
 			++p;
