@@ -477,7 +477,7 @@ namespace assignment1
 			++p2;
 		}
 
-		return (*p2 == '\0') ? true : false;
+		return *p1 - *p2 == 0 ? true : false;
 	}
 
 	unsigned int MyString::MyStrLen(const char* str)
