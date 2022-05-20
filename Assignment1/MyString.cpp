@@ -14,7 +14,7 @@ namespace assignment1
 
 		mLength = MyStrLen(s);
 
-		mCapacity = mLength >= INITIAL_CAPACITY ? mLength * 2 : INITIAL_CAPACITY;
+		mCapacity = mLength + 1;
 
 		mCString = new char[mCapacity];
 
@@ -47,7 +47,7 @@ namespace assignment1
 
 	void MyString::Append(const char* s)
 	{
-		if (s == nullptr || s == "")
+		if (s == nullptr || MyStrCmp(s, ""))
 		{
 			return;
 		}
@@ -56,7 +56,7 @@ namespace assignment1
 
 		if (mLength + length >= mCapacity)
 		{
-			mCapacity = (mLength + length + 1);
+			mCapacity += length;
 
 			char* temp = new char[mCapacity];
 
