@@ -56,7 +56,7 @@ namespace assignment1
 
 		if (mLength + length >= mCapacity)
 		{
-			mCapacity = (mLength + length) * 2;
+			mCapacity = (mLength + length + 1);
 
 			char* temp = new char[mCapacity];
 
@@ -182,7 +182,7 @@ namespace assignment1
 
 		char* result = new char[mLength + length + 1];
 
-		char* result_p = result;
+		char* resultPtr = result;
 		const char* p1 = mCString;
 		const char* p2 = s;
 
@@ -195,16 +195,16 @@ namespace assignment1
 
 			if (*p1 != '\0')
 			{
-				*result_p++ = *p1++;
+				*resultPtr++ = *p1++;
 			}
 
 			if (*p2 != '\0')
 			{
-				*result_p++ = *p2++;
+				*resultPtr++ = *p2++;
 			}
 		}
 
-		*result_p = '\0';
+		*resultPtr = '\0';
 
 		if (mLength + length >= mCapacity)
 		{
@@ -383,7 +383,7 @@ namespace assignment1
 
 	void MyString::Reverse()
 	{
-		if (mLength == 0)
+		if (mLength < 2)
 		{
 			return;
 		}
@@ -404,12 +404,18 @@ namespace assignment1
 
 	bool MyString::operator==(const MyString& rhs) const
 	{
+		if (mCString == nullptr || rhs.mCString == nullptr)
+		{
+			return false;
+		}
+
 		return MyStrCmp(mCString, rhs.mCString);
 	}
 
 	MyString& MyString::operator=(const MyString& rhs)
 	{
-		if (*this == rhs) {
+		if (*this == rhs) 
+		{
 			return *this;
 		}
 
@@ -465,11 +471,6 @@ namespace assignment1
 		const char* p1 = str1;
 		const char* p2 = str2;
 
-		if (p1 == nullptr || p2 == nullptr)
-		{
-			return false;
-		}
-
 		while (*p1 == *p2 && *p1 != '\0')
 		{
 			++p1;
@@ -494,14 +495,14 @@ namespace assignment1
 
 	void MyString::MyStrCpy(char* dest, const char* src)
 	{
-		char* dest_p = dest;
-		const char* src_p = src;
+		char* destPtr = dest;
+		const char* srcPtr = src;
 
 		while (true)
 		{
-			*dest_p++ = *src_p;
+			*destPtr++ = *srcPtr;
 
-			if (*src_p++ == '\0')
+			if (*srcPtr++ == '\0')
 			{
 				break;
 			}
