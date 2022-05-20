@@ -31,9 +31,9 @@ namespace assignment1
 		void ToUpper();
 
 		bool IsAlpha(const char c);
+		bool MyStrCmp(const char* str1, const char* str2) const;
 		unsigned int MyStrLen(const char* str);
 		void MyStrCpy(char* dest, const char* src);
-		void MyStrNCpy(char* dest, const char* src, unsigned int count);
 		void MyStrCat(const char* s);
 
 	private:

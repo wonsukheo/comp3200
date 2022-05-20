@@ -4,9 +4,8 @@ namespace assignment1
 {
     MyString::MyString(const char* s)
     {
-        unsigned int length = MyStrLen(s);
-
-        mLength = length;
+        //null ptr check? how?
+        mLength = MyStrLen(s);
 
         mCapacity = mLength >= INITIAL_CAPACITY ? mLength * 2 : INITIAL_CAPACITY;
 
@@ -72,6 +71,11 @@ namespace assignment1
 
     int MyString::IndexOf(const char* s)
     {
+        if (s == "")
+        {
+            return 0;
+        }
+
         const char* p1 = mCString;
         const char* p2 = s;
 
@@ -108,20 +112,30 @@ namespace assignment1
     {
         unsigned int length = MyStrLen(s);
 
-        const char* p1 = mCString + mLength;
-        const char* p2 = s + length;
+        if (s == "")
+        {
+            return mLength;
+        }
+
+        if (mLength == 0)
+        {
+            return -1;
+        }
+
+        const char* p1 = mCString + mLength - 1;
+        const char* p2 = s + length - 1;
 
         while (p1 != mCString)
         {
             if (*p1 == *p2)
             {
-                const char* pp1 = p1 - 1;
-                const char* pp2 = p2 - 1;
+                const char* pp1 = p1;
+                const char* pp2 = p2;
                 bool bSame = true;
 
                 while (pp2 != s)
                 {
-                    if (*pp1++ != *pp2++)
+                    if (*pp1-- != *pp2--)
                     {
                         bSame = false;
                         break;
@@ -130,7 +144,7 @@ namespace assignment1
 
                 if (bSame)
                 {
-                    return p1 - mCString;
+                    return p1 - (length - 1) - mCString;
                 }
             }
 
@@ -144,20 +158,40 @@ namespace assignment1
     {
         unsigned int length = MyStrLen(s);
 
+        char* result = new char[mLength + length + 1];
+
+        char* result_p = result;
+        const char* p1 = mCString;
+        const char* p2 = s;
+
+        while (true)
+        {
+            if (*p1 == '\0' && *p2 == '\0')
+            {
+                break;
+            }
+
+            if (*p1 != '\0')
+            {
+                *result_p++ = *p1++;
+            }
+            
+            if (*p2 != '\0')
+            {
+                *result_p++ = *p2++;
+            }
+        }
+
+        *result_p = '\0';
+        
         if (mLength + length >= mCapacity)
         {
             mCapacity = (mLength + length) * 2;
-
-            char* temp = new char[mCapacity];
-
-            MyStrCpy(temp, mCString);
-
-            delete[] mCString;
-
-            mCString = temp;
         }
 
-        mLength += length;
+        delete[] mCString;
+
+        mCString = result;
     }
 
     bool MyString::RemoveAt(unsigned int i)
@@ -204,12 +238,12 @@ namespace assignment1
                 *pp-- = *p--;
             }
 
-            while (p - mCString != totalLength - mLength)
+            while (mLength != totalLength)
             {
                 *p++ = ' ';
-            }
 
-            mLength = totalLength;
+                ++mLength;
+            }
         }
     }
 
@@ -238,12 +272,12 @@ namespace assignment1
                 *pp-- = *p--;
             }
 
-            while (p - mCString != totalLength - mLength)
+            while (mLength != totalLength)
             {
                 *p++ = c;
-            }
 
-            mLength = totalLength;
+                ++mLength;
+            }
         }
     }
 
@@ -266,14 +300,14 @@ namespace assignment1
 
             char* p = mCString + mLength;
 
-            while (p - mCString == totalLength)
+            while (mLength != totalLength)
             {
                 *p++ = ' ';
+
+                mLength++;
             }
 
             *p = '\0';
-
-            mLength = totalLength;
         }
     }
 
@@ -296,14 +330,14 @@ namespace assignment1
 
             char* p = mCString + mLength;
 
-            while (p - mCString == totalLength)
+            while (mLength != totalLength)
             {
                 *p++ = c;
+
+                mLength++;
             }
 
             *p = '\0';
-
-            mLength = totalLength;
         }
     }
 
@@ -312,7 +346,7 @@ namespace assignment1
         char* p = mCString;
         char* pp = mCString + mLength - 1;
 
-        while (p != pp)
+        while (p < pp)
         {
             char temp = *p;
             *p = *pp;
@@ -325,11 +359,24 @@ namespace assignment1
 
     bool MyString::operator==(const MyString& rhs) const
     {
-        return false;
+        return MyStrCmp(mCString, rhs.mCString);
     }
 
     MyString& MyString::operator=(const MyString& rhs)
     {
+        if (*this == rhs) {
+            return *this;
+        }
+
+        mLength = rhs.mLength;
+        mCapacity = rhs.mCapacity;
+
+        delete[] mCString;
+
+        mCString = new char[mCapacity];
+
+        MyStrCpy(mCString, rhs.mCString);
+
         return *this;
     }
 
@@ -363,12 +410,12 @@ namespace assignment1
         }
     }
 
-    bool IsAlpha(const char c)
+    bool MyString::IsAlpha(const char c)
     {
         return (c >= 65 && c <= 90 || c >= 97 && c <= 122) ? true : false;
     }
 
-    bool MyStrCmp(const char* str1, const char* str2)
+    bool MyString::MyStrCmp(const char* str1, const char* str2) const
     {
         const char* p1 = str1;
         const char* p2 = str2;
@@ -409,19 +456,6 @@ namespace assignment1
                 break;
             }
         }
-    }
-
-    void MyString::MyStrNCpy(char* dest, const char* src, unsigned int count)
-    {
-        char* dest_p = dest;
-        const char* src_p = src;
-
-        while (count--)
-        {
-            *dest_p++ = *src_p;
-        }
-
-        *dest_p == '\0';
     }
 
     void MyString::MyStrCat(const char* s)
