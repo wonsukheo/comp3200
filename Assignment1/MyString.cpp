@@ -4,7 +4,14 @@ namespace assignment1
 {
 	MyString::MyString(const char* s)
 	{
-		//null ptr check? how?
+		if (s == nullptr)
+		{
+			mLength = 0;
+			mCapacity = INITIAL_CAPACITY;
+			mCString = nullptr;
+			return;
+		}
+
 		mLength = MyStrLen(s);
 
 		mCapacity = mLength >= INITIAL_CAPACITY ? mLength * 2 : INITIAL_CAPACITY;
@@ -207,6 +214,8 @@ namespace assignment1
 		delete[] mCString;
 
 		mCString = result;
+
+		mLength += length;
 	}
 
 	bool MyString::RemoveAt(unsigned int i)
@@ -224,6 +233,8 @@ namespace assignment1
 
 			++p;
 		}
+
+		mLength -= 1;
 
 		return true;
 	}
@@ -372,6 +383,11 @@ namespace assignment1
 
 	void MyString::Reverse()
 	{
+		if (mLength == 0)
+		{
+			return;
+		}
+
 		char* p = mCString;
 		char* pp = mCString + mLength - 1;
 
@@ -448,6 +464,11 @@ namespace assignment1
 	{
 		const char* p1 = str1;
 		const char* p2 = str2;
+
+		if (p1 == nullptr || p2 == nullptr)
+		{
+			return false;
+		}
 
 		while (*p1 == *p2 && *p1 != '\0')
 		{
