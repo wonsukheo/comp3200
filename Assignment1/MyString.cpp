@@ -56,7 +56,7 @@ namespace assignment1
 
 		if (mLength + length >= mCapacity)
 		{
-			mCapacity += length;
+			mCapacity += length * 2;
 
 			char* temp = new char[mCapacity];
 
@@ -327,7 +327,7 @@ namespace assignment1
 		{
 			if (totalLength >= mCapacity)
 			{
-				mCapacity += totalLength;
+				mCapacity += (totalLength * 2);
 
 				char* temp = new char[mCapacity];
 
@@ -357,7 +357,7 @@ namespace assignment1
 		{
 			if (totalLength >= mCapacity)
 			{
-				mCapacity += totalLength;
+				mCapacity += (totalLength * 2);
 
 				char* temp = new char[mCapacity];
 
