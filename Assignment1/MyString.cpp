@@ -4,17 +4,18 @@ namespace assignment1
 {
 	MyString::MyString(const char* s)
 	{
-		if (s == nullptr)
+		/*if (s == nullptr)
 		{
 			mLength = 0;
 			mCapacity = INITIAL_CAPACITY;
 			mCString = nullptr;
+
 			return;
-		}
+		}*/
 
 		mLength = MyStrLen(s);
 
-		mCapacity = mLength + 1;
+		mCapacity = mLength < INITIAL_CAPACITY ? INITIAL_CAPACITY : mLength * 2;
 
 		mCString = new char[mCapacity];
 
@@ -404,10 +405,10 @@ namespace assignment1
 
 	bool MyString::operator==(const MyString& rhs) const
 	{
-		if (mCString == nullptr || rhs.mCString == nullptr)
+		/*if (mCString == nullptr || rhs.mCString == nullptr)
 		{
 			return false;
-		}
+		}*/
 
 		return MyStrCmp(mCString, rhs.mCString);
 	}
