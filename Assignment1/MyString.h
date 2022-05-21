@@ -32,7 +32,7 @@ namespace assignment1
 
 		bool IsAlpha(const char c);
 		bool MyStrCmp(const char* str1, const char* str2) const;
-		unsigned int MyStrLen(const char* str);
+		unsigned int MyStrLen(const char* str) const;
 		void MyStrCpy(char* dest, const char* src);
 		void MyStrCat(const char* s);
 

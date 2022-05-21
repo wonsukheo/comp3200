@@ -4,15 +4,6 @@ namespace assignment1
 {
 	MyString::MyString(const char* s)
 	{
-		/*if (s == nullptr)
-		{
-			mLength = 0;
-			mCapacity = INITIAL_CAPACITY;
-			mCString = nullptr;
-
-			return;
-		}*/
-
 		mLength = MyStrLen(s);
 
 		mCapacity = mLength < INITIAL_CAPACITY ? INITIAL_CAPACITY : mLength * 2;
@@ -89,10 +80,10 @@ namespace assignment1
 			return 0;
 		}
 
-		if (s == nullptr)
+		/*if (s == nullptr)
 		{
 			return -1;
-		}
+		}*/
 
 		const char* p1 = mCString;
 		const char* p2 = s;
@@ -174,7 +165,7 @@ namespace assignment1
 
 	void MyString::Interleave(const char* s)
 	{
-		if (s == "" || nullptr)
+		if (s == "")
 		{
 			return;
 		}
@@ -405,11 +396,6 @@ namespace assignment1
 
 	bool MyString::operator==(const MyString& rhs) const
 	{
-		/*if (mCString == nullptr || rhs.mCString == nullptr)
-		{
-			return false;
-		}*/
-
 		return MyStrCmp(mCString, rhs.mCString);
 	}
 
@@ -481,7 +467,7 @@ namespace assignment1
 		return *p1 - *p2 == 0 ? true : false;
 	}
 
-	unsigned int MyString::MyStrLen(const char* str)
+	unsigned int MyString::MyStrLen(const char* str) const
 	{
 		const char* p;
 
