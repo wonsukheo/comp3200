@@ -8,10 +8,7 @@ namespace lab3
 		: mMaxEntries(maxEntries)
 		, mEntryCount(0)
 	{
-		mName = new char[strlen(name) + 1];
-		strcpy(mName, name);
-
-		mNameString = new std::string(mName);
+		mName = new std::string(name);
 
 		mWorkHours = new unsigned int[mMaxEntries];
 	}
@@ -20,10 +17,7 @@ namespace lab3
 		: mMaxEntries(other.mMaxEntries)
 		, mEntryCount(other.mEntryCount)
 	{
-		mName = new char[strlen(other.mName) + 1];
-		strcpy(mName, other.mName);
-
-		mNameString = new std::string(mName);
+		mName = other.mName;
 
 		mWorkHours = new unsigned int[mMaxEntries];
 		memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mEntryCount);
@@ -31,9 +25,8 @@ namespace lab3
 
 	TimeSheet::~TimeSheet()
 	{
-		delete[] mName;
+		delete mName;
 		delete[] mWorkHours;
-		delete mNameString;
 	}
 
 	TimeSheet& TimeSheet::operator=(const TimeSheet& other)
@@ -48,12 +41,8 @@ namespace lab3
 
 		delete[] mName;
 		delete[] mWorkHours;
-		delete mNameString;
 
-		mName = new char[strlen(other.mName) + 1];
-		strcpy(mName, other.mName);
-
-		mNameString = new std::string(mName);
+		mName = other.mName;
 
 		mWorkHours = new unsigned int[mMaxEntries];
 		memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mMaxEntries);
@@ -88,10 +77,10 @@ namespace lab3
 
 	int TimeSheet::GetTotalTime() const
 	{
-		int sum = 0;
+		unsigned int sum = 0;
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < static_cast<int>(mEntryCount))
+		while (p - mWorkHours < mEntryCount)
 		{
 			sum += *p++;
 		}
@@ -117,7 +106,7 @@ namespace lab3
 
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < static_cast<int>(mEntryCount))
+		while (p - mWorkHours < mEntryCount)
 		{
 			variance += (*p - avg) * (*p - avg);
 			++p;
@@ -130,6 +119,6 @@ namespace lab3
 
 	const std::string& TimeSheet::GetName() const
 	{
-		return *mNameString;
+		return *mName;
 	}
 }
