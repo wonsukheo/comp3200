@@ -1,6 +1,7 @@
 #include "TimeSheet.h"
 
 #include <math.h>
+#include <string.h>
 
 namespace lab3
 {
@@ -17,7 +18,7 @@ namespace lab3
 		: mMaxEntries(other.mMaxEntries)
 		, mEntryCount(other.mEntryCount)
 	{
-		mName = other.mName;
+		mName = new std::string(*other.mName);
 
 		mWorkHours = new unsigned int[mMaxEntries];
 		memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mEntryCount);
@@ -42,7 +43,7 @@ namespace lab3
 		delete mName;
 		delete[] mWorkHours;
 
-		mName = other.mName;
+		mName = new std::string(*other.mName);
 
 		mWorkHours = new unsigned int[mMaxEntries];
 		memcpy(mWorkHours, other.mWorkHours, sizeof(unsigned int) * mMaxEntries);
