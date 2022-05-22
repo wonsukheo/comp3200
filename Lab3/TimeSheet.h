@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 
 namespace lab3
@@ -18,8 +19,7 @@ namespace lab3
 		const std::string& GetName() const;
 
 	private:
-		std::string* mNameString;
-		char* mName;
+		std::string* mName;
 		unsigned int mMaxEntries;
 		unsigned int mEntryCount;
 		unsigned int* mWorkHours;

@@ -39,7 +39,7 @@ namespace lab3
 		mMaxEntries = other.mMaxEntries;
 		mEntryCount = other.mEntryCount;
 
-		delete[] mName;
+		delete mName;
 		delete[] mWorkHours;
 
 		mName = other.mName;
@@ -80,7 +80,7 @@ namespace lab3
 		unsigned int sum = 0;
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < mEntryCount)
+		while (p - mWorkHours < static_cast<int>(mEntryCount))
 		{
 			sum += *p++;
 		}
@@ -106,7 +106,7 @@ namespace lab3
 
 		unsigned int* p = mWorkHours;
 
-		while (p - mWorkHours < mEntryCount)
+		while (p - mWorkHours < static_cast<int>(mEntryCount))
 		{
 			variance += (*p - avg) * (*p - avg);
 			++p;
