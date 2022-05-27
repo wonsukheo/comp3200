@@ -14,11 +14,16 @@ namespace lab4
 	{
 		memcpy(mPoints, other.mPoints, sizeof(Point) * MAX_COUNT);
 	}
-	/*
-	PolyLine::~PolyLine()
+	
+/*	PolyLine::~PolyLine()
 	{
-	}
-	*/
+		int i = 0;
+		while (i < mCount)
+		{
+			delete mPoints[i];
+		}
+	}*/
+	
 	void PolyLine::operator=(const PolyLine& other)
 	{
 		if (this == &other)
@@ -38,8 +43,7 @@ namespace lab4
 			return false;
 		}
 
-		mPoints[mCount].mX = x;
-		mPoints[mCount].mY = y;
+		mPoints[mCount] = Point(x, y);
 
 		++mCount;
 
@@ -48,13 +52,12 @@ namespace lab4
 
 	bool PolyLine::AddPoint(const Point* point)
 	{
-		if (mCount == MAX_COUNT)
+		if (mCount == MAX_COUNT || point == NULL)
 		{
 			return false;
 		}
 
-		mPoints[mCount].mX = point->mX;
-		mPoints[mCount].mY = point->mY;
+		mPoints[mCount] = point;
 
 		++mCount;
 
@@ -68,26 +71,29 @@ namespace lab4
 			return false;
 		}
 
-		Point* p = mPoints + i;
-
-		while (p - mPoints < static_cast<int>(mCount) - 1)
+		while (i < mCount)
 		{
-			*p = *(p + 1);
-			++p;
+			delete mPoints[i];
+
+			if (i == mCount - 1)
+			{
+				break;
+			}
+
+			mPoints[i] = mPoints[i + 1];
+
+			++i;
 		}
 
-		p->mX = 0;
-		p->mY = 0;
-
-		--mCount;
+		mPoints[i] = NULL;
 
 		return true;
 	}
 	
 	bool PolyLine::TryGetMinBoundingRectangle(Point* outMin, Point* outMax) const
 	{
-		float minX = mPoints[0].mX;
-		float minY = mPoints[0].mY;
+		float minX = mPoints[0]->mX;
+		float minY = mPoints[0]->mY;
 
 		float maxX = minX;
 		float maxY = minY;
@@ -99,24 +105,24 @@ namespace lab4
 
 		for (int i = 1; i < static_cast<int>(mCount); ++i)
 		{
-			if (mPoints[i].mX < minX)
+			if (mPoints[i]->mX < minX)
 			{
-				minX = mPoints[i].mX;
+				minX = mPoints[i]->mX;
 			}
 
-			if (mPoints[i].mY < minY)
+			if (mPoints[i]->mY < minY)
 			{
-				minY = mPoints[i].mY;
+				minY = mPoints[i]->mY;
 			}
 
-			if (mPoints[i].mX > maxX)
+			if (mPoints[i]->mX > maxX)
 			{
-				maxX = mPoints[i].mX;
+				maxX = mPoints[i]->mX;
 			}
 
-			if (mPoints[i].mY > maxY)
+			if (mPoints[i]->mY > maxY)
 			{
-				maxY = mPoints[i].mY;
+				maxY = mPoints[i]->mY;
 			}
 		}
 
@@ -139,6 +145,6 @@ namespace lab4
 			return NULL;
 		}
 
-		return &mPoints[i];
+		return mPoints[i];
 	}
 }
