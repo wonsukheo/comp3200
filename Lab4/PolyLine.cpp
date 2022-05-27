@@ -63,14 +63,14 @@ namespace lab4
 
 	bool PolyLine::RemovePoint(unsigned int i)
 	{
-		if (mCount == 0 || i > mCount)
+		if (mCount == 0 || i >= mCount)
 		{
 			return false;
 		}
 
 		Point* p = mPoints + i;
 
-		while (p - mPoints < static_cast<int>(mCount))
+		while (p - mPoints < static_cast<int>(mCount) - 1)
 		{
 			*p = *(p + 1);
 			++p;
