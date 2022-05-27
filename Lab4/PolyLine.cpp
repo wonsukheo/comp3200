@@ -33,7 +33,8 @@ namespace lab4
 
 	bool PolyLine::AddPoint(float x, float y)
 	{
-		if (mCount == MAX_COUNT) {
+		if (mCount == MAX_COUNT)
+		{
 			return false;
 		}
 
@@ -47,11 +48,13 @@ namespace lab4
 
 	bool PolyLine::AddPoint(const Point* point)
 	{
-		if (mCount == MAX_COUNT) {
+		if (mCount == MAX_COUNT)
+		{
 			return false;
 		}
 
-		mPoints[mCount] = *point;
+		mPoints[mCount].mX = point->mX;
+		mPoints[mCount].mY = point->mY;
 
 		++mCount;
 
@@ -67,7 +70,7 @@ namespace lab4
 
 		Point* p = mPoints + i;
 
-		while (p - mPoints < mCount)
+		while (p - mPoints < static_cast<int>(mCount))
 		{
 			*p = *(p + 1);
 			++p;
@@ -131,7 +134,7 @@ namespace lab4
 
 	const Point* PolyLine::operator[](unsigned int i) const
 	{
-		if (mCount == 0 || i > mCount)
+		if (mCount == 0 || i >= mCount)
 		{
 			return NULL;
 		}
