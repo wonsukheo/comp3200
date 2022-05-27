@@ -7,6 +7,7 @@ namespace lab4
 	PolyLine::PolyLine()
 		: mCount(0)
 	{
+		memset(mPoints, 0, sizeof(Point) * MAX_COUNT);
 	}
 
 	PolyLine::PolyLine(const PolyLine& other)
