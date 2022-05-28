@@ -13,7 +13,12 @@ namespace lab4
 	PolyLine::PolyLine(const PolyLine& other)
 		: mCount(other.mCount)
 	{
-		memcpy(mPoints, other.mPoints, sizeof(Point*) * MAX_COUNT);
+		unsigned int i = 0;
+
+		while (i < mCount)
+		{
+			mPoints[i] = new Point(other.mPoints[i]->mX, other.mPoints[i]->mY);
+		}
 	}
 	
 	void PolyLine::operator=(const PolyLine& other)
@@ -25,7 +30,12 @@ namespace lab4
 
 		mCount = other.mCount;
 		
-		memcpy(mPoints, other.mPoints, sizeof(Point*) * MAX_COUNT);
+		unsigned int i = 0;
+
+		while (i < mCount)
+		{
+			mPoints[i] = new Point(other.mPoints[i]->mX, other.mPoints[i]->mY);
+		}
 	}
 
 	bool PolyLine::AddPoint(float x, float y)
@@ -81,10 +91,13 @@ namespace lab4
 		{
 			delete mPoints[i];
 			mPoints[i] = mPoints[i + 1];
+			++i;
 		}
 
 		delete mPoints[i];
 		mPoints[i] = NULL;
+
+		--mCount;
 
 		return true;
 	}
