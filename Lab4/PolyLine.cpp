@@ -13,14 +13,18 @@ namespace lab4
 	PolyLine::PolyLine(const PolyLine& other)
 		: mCount(other.mCount)
 	{
-		unsigned int i = 0;
+		Point** p = mPoints;
+		Point* const* pp = other.mPoints;
 
-		while (i < mCount)
+		while (p - mPoints < mCount)
 		{
-			mPoints[i] = new Point(other.mPoints[i]->mX, other.mPoints[i]->mY);
+			*p = new Point((*pp)->mX, (*pp)->mY);
+
+			++p;
+			++pp;
 		}
 	}
-	
+
 	void PolyLine::operator=(const PolyLine& other)
 	{
 		if (this == &other)
@@ -28,13 +32,29 @@ namespace lab4
 			return;
 		}
 
-		mCount = other.mCount;
-		
-		unsigned int i = 0;
+		delete[] mPoints;
 
-		while (i < mCount)
+		Point** p = mPoints;
+		Point* const* pp = other.mPoints;
+
+		mCount = other.mCount;
+
+		while (p - mPoints < mCount)
 		{
-			mPoints[i] = new Point(other.mPoints[i]->mX, other.mPoints[i]->mY);
+			*p = new Point((*pp)->mX, (*pp)->mY);
+
+			++p;
+			++pp;
+		}
+	}
+
+	PolyLine::~PolyLine()
+	{
+		Point** p = mPoints;
+
+		while (p - mPoints < mCount)
+		{
+			delete *p++;
 		}
 	}
 
@@ -45,37 +65,19 @@ namespace lab4
 			return false;
 		}
 
-		mPoints[mCount] = new Point(x, y);
-
-		++mCount;
+		mPoints[mCount++] = new Point(x, y);
 
 		return true;
 	}
 
-	PolyLine::~PolyLine()
-	{
-		unsigned int i = 0;
-
-		while (i < mCount)
-		{
-			delete mPoints[i];
-
-			mPoints[i++] = NULL;
-		}
-
-		mCount = 0;
-	}
-
 	bool PolyLine::AddPoint(const Point* point)
 	{
-		if (mCount == MAX_COUNT || point == NULL)
+		if (mCount == MAX_COUNT)
 		{
 			return false;
 		}
 
-		mPoints[mCount] = point;
-
-		++mCount;
+		mPoints[mCount++] = new Point(point->mX, point->mY);
 
 		return true;
 	}
@@ -87,55 +89,63 @@ namespace lab4
 			return false;
 		}
 
-		while (i != mCount - 1)
+		delete mPoints[i];
+
+		Point** p = mPoints + i;
+
+		while (p - mPoints < mCount - 1)
 		{
-			delete mPoints[i];
-			mPoints[i] = mPoints[i + 1];
-			++i;
+			*p = *(p + 1);
+			++p;
 		}
 
-		delete mPoints[i];
-		mPoints[i] = NULL;
+		*p = NULL;
 
 		--mCount;
 
 		return true;
 	}
-	
+
 	bool PolyLine::TryGetMinBoundingRectangle(Point* outMin, Point* outMax) const
 	{
-		float minX = mPoints[0]->mX;
-		float minY = mPoints[0]->mY;
-
-		float maxX = minX;
-		float maxY = minY;
-
-		if (mCount < 2)
+		if (mCount < 1)
 		{
 			return false;
 		}
 
-		for (int i = 1; i < static_cast<int>(mCount); ++i)
+		Point* const* p = mPoints;
+
+		float minX = (*p)->mX;
+		float minY = (*p)->mY;
+
+		float maxX = minX;
+		float maxY = minY;
+
+		++p;
+
+		while (p - mPoints < mCount)
 		{
-			if (mPoints[i]->mX < minX)
+			if ((*p)->mX < minX)
 			{
-				minX = mPoints[i]->mX;
+				minX = (*p)->mX;
 			}
 
-			if (mPoints[i]->mY < minY)
+			if ((*p)->mY < minY)
 			{
-				minY = mPoints[i]->mY;
+				minY = (*p)->mY;
 			}
 
-			if (mPoints[i]->mX > maxX)
+			if ((*p)->mX > maxX)
 			{
-				maxX = mPoints[i]->mX;
+				maxX = (*p)->mX;
 			}
 
-			if (mPoints[i]->mY > maxY)
+			if ((*p)->mY > maxY)
 			{
-				maxY = mPoints[i]->mY;
+				maxY = (*p)->mY;
 			}
+
+			++p;
 		}
 
 		if (minX < maxX && minY < maxY)
