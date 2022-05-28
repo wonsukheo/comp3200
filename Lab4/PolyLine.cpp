@@ -7,23 +7,14 @@ namespace lab4
 	PolyLine::PolyLine()
 		: mCount(0)
 	{
-		memset(mPoints, 0, sizeof(Point) * MAX_COUNT);
+		memset(mPoints, 0, sizeof(Point*) * MAX_COUNT);
 	}
 
 	PolyLine::PolyLine(const PolyLine& other)
 		: mCount(other.mCount)
 	{
-		memcpy(mPoints, other.mPoints, sizeof(Point) * MAX_COUNT);
+		memcpy(mPoints, other.mPoints, sizeof(Point*) * MAX_COUNT);
 	}
-	
-/*	PolyLine::~PolyLine()
-	{
-		int i = 0;
-		while (i < mCount)
-		{
-			delete mPoints[i];
-		}
-	}*/
 	
 	void PolyLine::operator=(const PolyLine& other)
 	{
@@ -34,7 +25,7 @@ namespace lab4
 
 		mCount = other.mCount;
 		
-		memcpy(mPoints, other.mPoints, sizeof(Point) * MAX_COUNT);
+		memcpy(mPoints, other.mPoints, sizeof(Point*) * MAX_COUNT);
 	}
 
 	bool PolyLine::AddPoint(float x, float y)
@@ -44,11 +35,25 @@ namespace lab4
 			return false;
 		}
 
-		mPoints[mCount] = Point(x, y);
+		mPoints[mCount] = new Point(x, y);
 
 		++mCount;
 
 		return true;
+	}
+
+	PolyLine::~PolyLine()
+	{
+		unsigned int i = 0;
+
+		while (i < mCount)
+		{
+			delete mPoints[i];
+
+			mPoints[i++] = NULL;
+		}
+
+		mCount = 0;
 	}
 
 	bool PolyLine::AddPoint(const Point* point)
@@ -67,25 +72,18 @@ namespace lab4
 
 	bool PolyLine::RemovePoint(unsigned int i)
 	{
-		if (mCount == 0 || i >= mCount)
+		if (i >= mCount)
 		{
 			return false;
 		}
 
-		while (i < mCount)
+		while (i != mCount - 1)
 		{
 			delete mPoints[i];
-
-			if (i == mCount - 1)
-			{
-				break;
-			}
-
 			mPoints[i] = mPoints[i + 1];
-
-			++i;
 		}
 
+		delete mPoints[i];
 		mPoints[i] = NULL;
 
 		return true;

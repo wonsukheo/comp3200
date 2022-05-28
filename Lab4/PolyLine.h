@@ -11,7 +11,7 @@ namespace lab4
 	public:
 		PolyLine();
 		PolyLine(const PolyLine& other);
-		//~PolyLine();
+		~PolyLine();
 
 		bool AddPoint(float x, float y);
 		bool AddPoint(const Point* point);
@@ -24,6 +24,6 @@ namespace lab4
 	private:
 		unsigned int mCount;
 
-		Point mPoints[MAX_COUNT];
+		const Point* mPoints[MAX_COUNT];
 	};
 }
