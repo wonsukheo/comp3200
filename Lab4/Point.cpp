@@ -19,13 +19,7 @@ namespace lab4
 		, mY(other.mY)
 	{
 	}
-	/*
-	Point::~Point()
-	{
-		mX = -100;
-		mY = -100;
-	}
-	*/
+
 	Point Point::operator+(const Point& other) const
 	{
 		return Point(mX + other.mX, mY + other.mY);
@@ -43,7 +37,7 @@ namespace lab4
 
 	Point operator*(const float scala, const Point& rhs)
 	{
-		return rhs.operator*(scala);
+		return rhs * scala;
 	}
 
 	void Point::operator=(const Point& other)

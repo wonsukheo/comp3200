@@ -10,7 +10,6 @@ namespace lab4
 		Point();
 		Point(float x, float y);
 		Point(const Point& other);
-		//~Point();
 
 		Point operator+(const Point& other) const;
 		Point operator-(const Point& other) const;

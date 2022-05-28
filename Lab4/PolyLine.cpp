@@ -44,10 +44,7 @@ namespace lab4
 
 		while (p - mPoints < static_cast<int>(mCount))
 		{
-			*p = new Point((*pp)->mX, (*pp)->mY);
-
-			++p;
-			++pp;
+			*p++ = *pp++;
 		}
 	}
 
@@ -151,14 +148,11 @@ namespace lab4
 			++p;
 		}
 
-		if (minX < maxX && minY < maxY)
-		{
-			outMin->mX = minX;
-			outMin->mY = minY;
+		outMin->mX = minX;
+		outMin->mY = minY;
 
-			outMax->mX = maxX;
-			outMax->mY = maxY;
-		}
+		outMax->mX = maxX;
+		outMax->mY = maxY;
 
 		return true;
 	}
