@@ -22,6 +22,8 @@ namespace lab4
 	/*
 	Point::~Point()
 	{
+		mX = -100;
+		mY = -100;
 	}
 	*/
 	Point Point::operator+(const Point& other) const
