@@ -97,7 +97,7 @@ namespace lab4
 		float maxX = minX;
 		float maxY = minY;
 
-		if (mCount < 1)
+		if (mCount < 2)
 		{
 			return false;
 		}

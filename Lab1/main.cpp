@@ -1,15 +1,17 @@
 #include <iostream>
+#include <iomanip>
 
 #include "Add.h"
 
+using namespace std;
+
 int main()
 {
-    int a = 10;
-    int b = 15;
+    char name[5];
 
-    int result = lab1::Add(a, b);
+    cin >> setw(5) >> name;
 
-    std::cout << result << std::endl;
+    cout << name << endl;
 
-    return 0;
+        return 0;
 }
