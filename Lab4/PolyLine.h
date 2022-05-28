@@ -24,6 +24,6 @@ namespace lab4
 	private:
 		unsigned int mCount;
 
-		Point* mPoints[MAX_COUNT];
+		const Point* mPoints[MAX_COUNT];
 	};
 }

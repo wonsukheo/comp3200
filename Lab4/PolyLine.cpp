@@ -13,10 +13,10 @@ namespace lab4
 	PolyLine::PolyLine(const PolyLine& other)
 		: mCount(other.mCount)
 	{
-		Point** p = mPoints;
-		Point* const* pp = other.mPoints;
+		const Point** p = mPoints;
+		const Point* const* pp = other.mPoints;
 
-		while (p - mPoints < mCount)
+		while (p - mPoints < static_cast<int>(mCount))
 		{
 			*p = new Point((*pp)->mX, (*pp)->mY);
 
@@ -32,14 +32,17 @@ namespace lab4
 			return;
 		}
 
-		delete[] mPoints;
+		const Point** p = mPoints;
 
-		Point** p = mPoints;
-		Point* const* pp = other.mPoints;
+		while (p - mPoints < static_cast<int>(mCount))
+		{
+			delete* p++;
+		}
 
+		const Point* const* pp = other.mPoints;
 		mCount = other.mCount;
 
-		while (p - mPoints < mCount)
+		while (p - mPoints < static_cast<int>(mCount))
 		{
 			*p = new Point((*pp)->mX, (*pp)->mY);
 
@@ -50,9 +53,9 @@ namespace lab4
 
 	PolyLine::~PolyLine()
 	{
-		Point** p = mPoints;
+		const Point** p = mPoints;
 
-		while (p - mPoints < mCount)
+		while (p - mPoints < static_cast<int>(mCount))
 		{
 			delete *p++;
 		}
@@ -72,12 +75,12 @@ namespace lab4
 
 	bool PolyLine::AddPoint(const Point* point)
 	{
-		if (mCount == MAX_COUNT)
+		if (mCount == MAX_COUNT || point == NULL)
 		{
 			return false;
 		}
 
-		mPoints[mCount++] = new Point(point->mX, point->mY);
+		mPoints[mCount++] = point;
 
 		return true;
 	}
@@ -91,9 +94,9 @@ namespace lab4
 
 		delete mPoints[i];
 
-		Point** p = mPoints + i;
+		const Point** p = mPoints + i;
 
-		while (p - mPoints < mCount - 1)
+		while (p - mPoints < static_cast<int>(mCount) - 1)
 		{
 			*p = *(p + 1);
 			++p;
@@ -113,7 +116,7 @@ namespace lab4
 			return false;
 		}
 
-		Point* const* p = mPoints;
+		const Point* const* p = mPoints;
 
 		float minX = (*p)->mX;
 		float minY = (*p)->mY;
@@ -123,7 +126,7 @@ namespace lab4
 
 		++p;
 
-		while (p - mPoints < mCount)
+		while (p - mPoints < static_cast<int>(mCount))
 		{
 			if ((*p)->mX < minX)
 			{
