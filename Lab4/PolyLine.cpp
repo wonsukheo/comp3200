@@ -39,6 +39,7 @@ namespace lab4
 			delete* p++;
 		}
 
+		p = mPoints;
 		const Point* const* pp = other.mPoints;
 		mCount = other.mCount;
 
