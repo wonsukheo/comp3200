@@ -45,7 +45,10 @@ namespace lab4
 
 		while (p - mPoints < static_cast<int>(mCount))
 		{
-			*p++ = *pp++;
+			*p = new Point((*pp)->mX, (*pp)->mY);
+
+			++p;
+			++pp;
 		}
 	}
 
