@@ -8,6 +8,7 @@ namespace lab5
 	{
 	public:
 		CircleLawn(unsigned int);
+		~CircleLawn();
 
 		unsigned int GetArea() const;
 

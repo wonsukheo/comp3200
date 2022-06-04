@@ -3,7 +3,7 @@
 
 namespace lab5
 {
-	const double Lawn::mSodRollWidth = 0.3f;
+	const double Lawn::mSodRollWidth = 0.3;
 
 	Lawn::Lawn()
 	{
