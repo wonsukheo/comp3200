@@ -15,7 +15,7 @@ namespace lab5
 
 	unsigned int Lawn::GetGrassPrice(eGrassType grassType) const
 	{
-		return MyMath::Ceil(grassType * GetArea() / 100);
+		return MyMath::Ceil(grassType * GetArea() / (double)100);
 	}
 
 	unsigned int Lawn::GetMinimumSodRollsCount() const
