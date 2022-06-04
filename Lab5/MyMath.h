@@ -5,7 +5,7 @@ namespace lab5
 	class MyMath
 	{
 	public:
-		static unsigned int Ceil(float value);
+		static unsigned int Ceil(double value);
 	private:
 		MyMath() {};
 	};

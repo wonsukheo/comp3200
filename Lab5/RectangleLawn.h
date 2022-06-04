@@ -14,7 +14,7 @@ namespace lab5
 		unsigned int GetMinimumFencesCount() const;
 		unsigned int GetFencePrice(eFenceType fenceType) const;
 
-	private:
+	protected:
 		unsigned int mWidth;
 		unsigned int mHeight;
 	};

@@ -2,11 +2,11 @@
 
 namespace lab5
 {
-	unsigned int MyMath::Ceil(float value)
+	unsigned int MyMath::Ceil(double value)
 	{
 		int intValue = static_cast<int>(value);
 
-		if (value == static_cast<float>(intValue))
+		if (value == static_cast<double>(intValue))
 		{
 			return intValue;
 		}

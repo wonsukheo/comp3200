@@ -4,18 +4,18 @@
 namespace lab5
 {
 	SquareLawn::SquareLawn(unsigned int length)
-		: mLength(length)
+		: RectangleLawn(length, length)
 	{
 	}
 
 	unsigned int SquareLawn::GetArea() const
 	{
-		return mLength * mLength;
+		return mWidth * mWidth;
 	}
 
 	unsigned int SquareLawn::GetMinimumFencesCount() const
 	{
-		return MyMath::Ceil(mLength * 4 / mFenceWidth);
+		return MyMath::Ceil(mWidth * 4 / mFenceWidth);
 	}
 
 	unsigned int SquareLawn::GetFencePrice(eFenceType fenceType) const
