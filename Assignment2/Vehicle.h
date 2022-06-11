@@ -1,18 +1,23 @@
 #pragma once
 
 #include "Person.h"
+#include "DeusExMachina.h"
 
 namespace assignment2
 {
 	class Vehicle
 	{
+		friend class DeusExMachina;
 	public:
+
+
 		Vehicle(unsigned int maxPassengersCount);
-		Vehicle(Vehicle& other);
+		Vehicle(unsigned int maxPassengersCount, int status);
+		Vehicle(const Vehicle& other);
 		
 		~Vehicle();
 		
-		Vehicle& operator=(Vehicle& other);
+		Vehicle& operator=(const Vehicle& other);
 
 		virtual unsigned int GetMaxSpeed() const = 0;
 
@@ -23,13 +28,19 @@ namespace assignment2
 		unsigned int GetPassengersCount() const;
 		unsigned int GetMaxPassengersCount() const;
 
+		virtual void Travel() = 0;
+
 	protected:
 		unsigned int mMaxPassengersCount;
 		unsigned int mPassengersCount;
 		unsigned int mPassengersWeight;
+		int mStatus;
+		unsigned int mTravelDistance;
 
 		const Person** mPassengers;
 
-		unsigned int Travel();
+
+	private:
+		//virtual unsigned int Travel() = 0;
 	};
 }

@@ -3,8 +3,9 @@
 namespace assignment2
 {
 	Sedan::Sedan()
-		: Vehicle(MAX_PASSENGER_COUNT)
+		: Vehicle(MAX_PASSENGER_COUNT, TRAVEL)
 		, mTrailer(NULL)
+		, mRested(RESTED)
 	{
 	}
 
@@ -20,6 +21,7 @@ namespace assignment2
 		}
 
 		mTrailer = trailer;
+		mRested = TRAILER_RESTED;
 
 		return true;
 	}
@@ -34,6 +36,7 @@ namespace assignment2
 		delete mTrailer;
 
 		mTrailer = NULL;
+		mRested = RESTED;
 
 		return true;
 	}
@@ -65,5 +68,24 @@ namespace assignment2
 		}
 
 		return 480;
+	}
+
+	void Sedan::Travel()
+	{
+		if (mStatus > 0)
+		{
+			--mStatus;
+
+			mTravelDistance += GetMaxSpeed();
+
+			return;
+		}
+
+		--mStatus;
+
+		if (mStatus == mRested)
+		{
+			mStatus = TRAVEL;
+		}
 	}
 }

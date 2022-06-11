@@ -10,6 +10,10 @@ namespace assignment2
 	class Boat : public Vehicle, public ISailable
 	{
 		friend class Airplane;
+
+		const static int TRAVEL = 2;
+		const static int RESTED = -1;
+
 	public:
 		Boat(unsigned int maxPassengersCount);
 		~Boat();
@@ -18,7 +22,9 @@ namespace assignment2
 		unsigned int GetSailSpeed() const;
 
 		Boatplane operator+(Airplane& plane);
+		void Travel();
 
 	private:
+		//unsigned int Travel();
 	};
 }

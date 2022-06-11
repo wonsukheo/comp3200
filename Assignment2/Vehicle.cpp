@@ -6,48 +6,80 @@ namespace assignment2
 		: mMaxPassengersCount(maxPassengersCount)
 		, mPassengersCount(0)
 		, mPassengersWeight(0)
+		, mStatus(0)
+		, mTravelDistance(0)
 	{
 		mPassengers = static_cast<const Person**>(malloc(sizeof(Person*) * maxPassengersCount));
 	}
 
-	Vehicle::Vehicle(Vehicle& other)
+	Vehicle::Vehicle(unsigned int maxPassengersCount, int status)
+		: mMaxPassengersCount(maxPassengersCount)
+		, mPassengersCount(0)
+		, mPassengersWeight(0)
+		, mStatus(status)
+		, mTravelDistance(0)
+	{
+		mPassengers = static_cast<const Person**>(malloc(sizeof(Person*) * maxPassengersCount));
+	}
+
+	Vehicle::Vehicle(const Vehicle& other)
 		: mMaxPassengersCount(other.mMaxPassengersCount)
 		, mPassengersCount(other.mPassengersCount)
 		, mPassengersWeight(other.mPassengersWeight)
+		, mStatus(other.mStatus)
+		, mTravelDistance(other.mTravelDistance)
 	{
 		mPassengers = static_cast<const Person**>(malloc(sizeof(Person*) * other.mMaxPassengersCount));
 	
 		if (mPassengers != NULL)
 		{
-			memcpy(mPassengers, other.mPassengers, sizeof(Person*) * mPassengersCount);
+			unsigned int i = 0;
+
+			while (i < mPassengersCount)
+			{
+				mPassengers[i] = new Person(*(other.mPassengers[i]));
+
+				i++;
+			}
 		}
 	}
 
 	Vehicle::~Vehicle()
 	{
-		delete[] *mPassengers;
+		delete[] mPassengers;
 
-		delete mPassengers;
+		//delete mPassengers;
 	}
 
-	Vehicle& Vehicle::operator=(Vehicle& other)
+	Vehicle& Vehicle::operator=(const Vehicle& other)
 	{
 		if (this == &other)
 		{
 			return *this;
 		}
 
-		delete[] mPassengers;
+		delete[] *mPassengers;
+		delete mPassengers;
 
 		mMaxPassengersCount = other.mMaxPassengersCount;
 		mPassengersCount = other.mPassengersCount;
 		mPassengersWeight = other.mPassengersWeight;
+		mStatus = other.mStatus;
+		mTravelDistance = other.mTravelDistance;
 
 		mPassengers = static_cast<const Person**>(malloc(sizeof(Person*) * other.mMaxPassengersCount));
 
 		if (mPassengers != NULL)
 		{
-			memcpy(mPassengers, other.mPassengers, sizeof(Person*) * mPassengersCount);
+			const Person* start_p = *(other.mPassengers);
+			const Person* p = start_p;
+			const Person* q = *mPassengers;
+
+			while (static_cast<unsigned int>(p - start_p) < mPassengersCount)
+			{
+				q = new Person(*p++);
+				++q;
+			}
 		}
 
 		return *this;

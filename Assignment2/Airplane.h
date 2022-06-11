@@ -14,7 +14,8 @@ namespace assignment2
 	{
 		friend class Boat;
 
-		const static unsigned int REST_COUNT = 1;
+		const static int TRAVEL = 1;
+		const static int RESTED = -3;
 
 	public:
 		Airplane(unsigned int maxPassengersCount);
@@ -26,7 +27,10 @@ namespace assignment2
 
 		Boatplane operator+(Boat& boat);
 
+		void Travel();
+		
+
 	private:
-		unsigned int mRestCount;
+		//unsigned int Travel();
 	};
 }

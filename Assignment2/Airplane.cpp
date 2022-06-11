@@ -7,8 +7,11 @@
 namespace assignment2
 {
 	Airplane::Airplane(unsigned int maxPassengersCount)
-		: Vehicle(maxPassengersCount)
-		, mRestCount(REST_COUNT)
+		: Vehicle(maxPassengersCount, TRAVEL)
+	{
+	}
+
+	Airplane::~Airplane()
 	{
 	}
 
@@ -20,6 +23,7 @@ namespace assignment2
 		return flySpeed > driveSpeed ? flySpeed : driveSpeed;
 	}
 
+
 	unsigned int Airplane::GetFlySpeed() const
 	{
 		return  static_cast<unsigned int>(200 * exp((-static_cast<int>(mPassengersWeight) + 800) / static_cast<double>(500)) + 0.5);
@@ -28,6 +32,25 @@ namespace assignment2
 	unsigned int Airplane::GetDriveSpeed() const
 	{
 		return  static_cast<unsigned int>(4 * exp((-static_cast<int>(mPassengersWeight) + 400) / static_cast<double>(70)) + 0.5);
+	}
+
+	void Airplane::Travel()
+	{
+		if (mStatus > 0)
+		{
+			--mStatus;
+
+			mTravelDistance += GetMaxSpeed();
+
+			return;
+		}
+
+		--mStatus;
+
+		if (mStatus == RESTED)
+		{
+			mStatus = TRAVEL;
+		}
 	}
 
 	Boatplane Airplane::operator+(Boat& boat)
@@ -42,8 +65,13 @@ namespace assignment2
 
 		result.mPassengersWeight = mPassengersWeight + boat.mPassengersWeight;
 
-		delete this;
-		delete &boat;
+		memset(mPassengers, 0, sizeof(Person*) * mPassengersCount);
+		mPassengersWeight = 0;
+		mPassengersCount = 0;
+
+		memset(boat.mPassengers, 0, sizeof(Person*) * boat.mPassengersCount);
+		boat.mPassengersWeight = 0;
+		boat.mPassengersCount = 0;
 
 		return result;
 	}

@@ -7,6 +7,7 @@ namespace assignment2
 	DeusExMachina::DeusExMachina()
 		: mVehicleCount(0)
 	{
+		memset(mVehicles, 0, sizeof(Vehicle*) * MAX_ALLOWED_VEHICLE);
 	}
 
 	DeusExMachina* DeusExMachina::GetInstance()
@@ -14,31 +15,41 @@ namespace assignment2
 		if (mInstance == NULL)
 		{
 			mInstance = new DeusExMachina();
-
-			return mInstance;
 		}
 
 		return mInstance;
 	}
 
+	DeusExMachina::~DeusExMachina()
+	{
+		delete mInstance;
+	}
+
 	void DeusExMachina::Travel() const
 	{
-		Vehicle* p = mVehicles[0];
+		unsigned int i = 0;
 
-		while (p - mVehicles[0] < MAX_ALLOWED_VEHICLE)
+		while (i < mVehicleCount)
 		{
-			p->
+			mVehicles[i]->Travel();
+
+			++i;
 		}
 	}
 
 	bool DeusExMachina::AddVehicle(Vehicle* vehicle)
 	{
+		if (mInstance == NULL)
+		{
+			return false;
+		}
+
 		if (mVehicleCount >= MAX_ALLOWED_VEHICLE)
 		{
 			return false;
 		}
 
-		mVehicles[mVehicleCount] = vehicle;
+		mVehicles[mVehicleCount++] = vehicle;
 
 		return true;
 	}
@@ -50,22 +61,45 @@ namespace assignment2
 			return false;
 		}
 
-		Vehicle** p = mVehicles + i;
-
-		while (p - mVehicles < mVehicleCount)
+		while (i < mVehicleCount - 1)
 		{
-			*p = *(p + 1);
+			mVehicles[i] = mVehicles[i + 1];
 
-			++p;
+			++i;
 		}
 
-		*p = NULL;
+		mVehicles[i] = NULL;
+
+		mVehicleCount--;
 
 		return true;
 	}
 
 	const Vehicle* DeusExMachina::GetFurthestTravelled() const
 	{
-		return NULL;
+		if (mVehicleCount == 0)
+		{
+			return NULL;
+		}
+
+		unsigned int max = 0;
+		unsigned int maxIndex = 0;
+
+		unsigned int i = 0;
+
+		Vehicle* p = *mVehicles;
+
+		while (i < mVehicleCount)
+		{
+			if (p->mTravelDistance > max)
+			{
+				max = p->mTravelDistance;
+				maxIndex = i;
+			}
+
+			p = *(mVehicles + ++i);
+		}
+
+		return mVehicles[maxIndex];
 	}
 }

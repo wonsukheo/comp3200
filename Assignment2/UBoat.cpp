@@ -3,7 +3,7 @@
 namespace assignment2
 {
 	UBoat::UBoat()
-		: Vehicle(MAX_PASSENGER_COUNT)
+		: Vehicle(MAX_PASSENGER_COUNT, TRAVEL)
 	{
 	}
 
@@ -30,5 +30,24 @@ namespace assignment2
 	unsigned int UBoat::GetDiveSpeed() const
 	{
 		return static_cast<unsigned int>(500 * log(static_cast<double>(mPassengersWeight + 150) / 150) + 30 + 0.5);
+	}
+
+	void UBoat::Travel()
+	{
+		if (mStatus > 0)
+		{
+			--mStatus;
+
+			mTravelDistance += GetMaxSpeed();
+
+			return;
+		}
+
+		--mStatus;
+
+		if (mStatus == RESTED)
+		{
+			mStatus = TRAVEL;
+		}
 	}
 }

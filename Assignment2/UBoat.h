@@ -6,10 +6,14 @@
 
 namespace assignment2
 {
-	const unsigned int MAX_PASSENGER_COUNT = 50;
+	
 
 	class UBoat : public Vehicle, public IDivable, public ISailable
 	{
+		const static int TRAVEL = 2;
+		const static int RESTED = -4;
+		const static unsigned int MAX_PASSENGER_COUNT = 50;
+
 	public:
 		UBoat();
 		~UBoat();
@@ -18,6 +22,9 @@ namespace assignment2
 		unsigned int GetSailSpeed() const;
 		unsigned int GetDiveSpeed() const;
 
+		void Travel();
+
 	private:
+		//unsigned int Travel();
 	};
 }

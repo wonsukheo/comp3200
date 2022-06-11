@@ -3,8 +3,20 @@
 namespace assignment2
 {
 	Boatplane::Boatplane(unsigned int maxPassengersCount)
-		: Vehicle(maxPassengersCount)
+		: Vehicle(maxPassengersCount, TRAVEL)
 	{
+	}
+
+	Boatplane::Boatplane(const Boatplane& other)
+		: Vehicle(other)
+	{
+	}
+
+	Boatplane& Boatplane::operator=(const Boatplane& other)
+	{
+		Vehicle::operator=(other);
+
+		return *this;
 	}
 
 	Boatplane::~Boatplane()
@@ -29,5 +41,24 @@ namespace assignment2
 		unsigned int temp = static_cast<unsigned int>(800 - 1.7 * mPassengersWeight + 0.5);
 
 		return temp > 20 ? temp : 20;
+	}
+
+	void Boatplane::Travel()
+	{
+		if (mStatus > 0)
+		{
+			--mStatus;
+
+			mTravelDistance += GetMaxSpeed();
+
+			return;
+		}
+
+		--mStatus;
+
+		if (mStatus == RESTED)
+		{
+			mStatus = TRAVEL;
+		}
 	}
 }

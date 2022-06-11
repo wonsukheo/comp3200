@@ -6,12 +6,18 @@
 
 namespace assignment2
 {
-	const unsigned int MAX_PASSENGER_COUNT = 4;
+	
 
 	class Trailer;
 
 	class Sedan : public Vehicle, public IDrivable
 	{
+		const static unsigned int MAX_PASSENGER_COUNT = 4;
+
+		const static int TRAVEL = 5;
+		const static int RESTED = -1;
+		const static int TRAILER_RESTED = -2;
+
 	public:
 		Sedan();
 		~Sedan();
@@ -22,7 +28,12 @@ namespace assignment2
 		unsigned int GetMaxSpeed() const;
 		unsigned int GetDriveSpeed() const;
 
+		void Travel();
+
 	private:
 		const Trailer* mTrailer;
+		int mRested;
+
+		//unsigned int Travel();
 	};
 }

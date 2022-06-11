@@ -3,7 +3,7 @@
 namespace assignment2
 {
 	Boat::Boat(unsigned int maxPassengersCount)
-		: Vehicle(maxPassengersCount)
+		: Vehicle(maxPassengersCount, TRAVEL)
 	{
 	}
 
@@ -23,6 +23,25 @@ namespace assignment2
 		return temp > 20 ? temp : 20;
 	}
 
+	void Boat::Travel()
+	{
+		if (mStatus > 0)
+		{
+			--mStatus;
+
+			mTravelDistance += GetMaxSpeed();
+
+			return;
+		}
+
+		--mStatus;
+
+		if (mStatus == RESTED)
+		{
+			mStatus = TRAVEL;
+		}
+	}
+
 	Boatplane Boat::operator+(Airplane& plane)
 	{
 		Boatplane result(mMaxPassengersCount + plane.mMaxPassengersCount);
@@ -35,8 +54,13 @@ namespace assignment2
 
 		result.mPassengersWeight = mPassengersWeight + plane.mPassengersWeight;
 
-		delete this;
-		delete &plane;
+		memset(mPassengers, 0, sizeof(Person*) * mPassengersCount);
+		mPassengersWeight = 0;
+		mPassengersCount = 0;
+
+		memset(plane.mPassengers, 0, sizeof(Person*) * plane.mPassengersCount);
+		plane.mPassengersWeight = 0;
+		plane.mPassengersCount = 0;
 
 		return result;
 	}
