@@ -20,8 +20,8 @@ namespace assignment2
 		Vehicle* GetVehicle(unsigned int i);
 		
 		~DeusExMachina();
-	private:
 
+	private:
 		Vehicle* mVehicles[MAX_ALLOWED_VEHICLE];
 		unsigned int mVehicleCount;
 

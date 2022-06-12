@@ -2,8 +2,6 @@
 
 namespace assignment2
 {
-	DeusExMachina* DeusExMachina::mInstance = NULL;
-
 	DeusExMachina::DeusExMachina()
 		: mVehicleCount(0)
 	{
