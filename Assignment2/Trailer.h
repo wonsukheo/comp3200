@@ -8,6 +8,8 @@ namespace assignment2
 		Trailer(unsigned int weight);
 		~Trailer();
 
+		Trailer(const Trailer& other);
+
 		unsigned int GetWeight() const;
 
 	private:

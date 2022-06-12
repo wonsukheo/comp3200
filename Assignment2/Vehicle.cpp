@@ -95,7 +95,7 @@ namespace assignment2
 
 	bool Vehicle::RemovePassenger(unsigned int i)
 	{
-		if (i >= mPassengersCount || mPassengersCount > 100)
+		if (i >= mPassengersCount || mPassengersCount > mMaxPassengersCount)
 		{
 			return false;
 		}

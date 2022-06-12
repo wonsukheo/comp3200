@@ -13,6 +13,39 @@ namespace assignment2
 	{
 	}
 
+	Sedan::Sedan(const Sedan& other)
+		: Vehicle(other)
+	{
+		mRested = other.mRested;
+
+		if (other.mTrailer != NULL)
+		{
+			mTrailer = new Trailer(*other.mTrailer);
+		}
+		else
+		{
+			mTrailer = NULL;
+		}
+	}
+
+	Sedan& Sedan::operator=(const Sedan& other)
+	{
+		Vehicle::operator=(other);
+
+		mRested = other.mRested;
+
+		if (other.mTrailer != NULL)
+		{
+			mTrailer = new Trailer(*other.mTrailer);
+		}
+		else
+		{
+			mTrailer = NULL;
+		}
+
+		return *this;
+	}
+	
 	bool Sedan::AddTrailer(const Trailer* trailer)
 	{
 		if (mTrailer != NULL)

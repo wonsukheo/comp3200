@@ -27,7 +27,7 @@ namespace assignment2
 
 		mWeight = other.mWeight;
 
-		mName = other.mName;
+		mName = other.mName.c_str();
 
 		return *this;
 	}

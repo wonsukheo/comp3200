@@ -18,7 +18,7 @@ namespace assignment2
 
 	unsigned int Boat::GetSailSpeed() const
 	{
-		unsigned int temp = 800 - 10 * mPassengersWeight;
+		unsigned int temp = static_cast<unsigned int>(800 - static_cast<double>(10) * mPassengersWeight + 0.5);
 
 		return temp > 20 ? temp : 20;
 	}
