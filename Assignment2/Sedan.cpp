@@ -31,12 +31,12 @@ namespace assignment2
 
 	Sedan& Sedan::operator=(const Sedan& other)
 	{
-		Vehicle::operator=(other);
-
 		if (this == &other)
 		{
 			return *this;
 		}
+
+		Vehicle::operator=(other);
 
 		mRested = other.mRested;
 

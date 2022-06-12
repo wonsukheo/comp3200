@@ -28,7 +28,5 @@ namespace assignment2
 		Boatplane operator+(Boat& boat);	
 	
 		void Travel();
-
-	private:
 	};
 }

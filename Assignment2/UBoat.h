@@ -21,8 +21,5 @@ namespace assignment2
 		unsigned int GetDiveSpeed() const;
 
 		void Travel();
-
-	private:
-
 	};
 }

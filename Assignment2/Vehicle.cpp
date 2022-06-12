@@ -8,18 +8,15 @@ namespace assignment2
 		, mPassengersWeight(0)
 		, mStatus(0)
 		, mTravelDistance(0)
+
 	{
-		mPassengers = static_cast<const Person**>(malloc(sizeof(Person*) * maxPassengersCount));
+		mPassengers = new const Person*[mMaxPassengersCount];
 	}
 
 	Vehicle::Vehicle(unsigned int maxPassengersCount, int status)
-		: mMaxPassengersCount(maxPassengersCount)
-		, mPassengersCount(0)
-		, mPassengersWeight(0)
-		, mStatus(status)
-		, mTravelDistance(0)
+		: Vehicle(maxPassengersCount)
 	{
-		mPassengers = static_cast<const Person**>(malloc(sizeof(Person*) * maxPassengersCount));
+		mStatus = status;
 	}
 
 	Vehicle::Vehicle(const Vehicle& other)
@@ -29,7 +26,9 @@ namespace assignment2
 		, mStatus(other.mStatus)
 		, mTravelDistance(other.mTravelDistance)
 	{
-		mPassengers = static_cast<const Person**>(malloc(sizeof(Person*) * other.mMaxPassengersCount));
+		delete[] mPassengers;
+
+		mPassengers = new const Person*[other.mMaxPassengersCount];
 	
 		if (mPassengers != NULL)
 		{
@@ -63,7 +62,7 @@ namespace assignment2
 		mStatus = other.mStatus;
 		mTravelDistance = other.mTravelDistance;
 
-		mPassengers = static_cast<const Person**>(malloc(sizeof(Person*) * other.mMaxPassengersCount));
+		mPassengers = new const Person*[other.mMaxPassengersCount];
 
 		if (mPassengers != NULL)
 		{

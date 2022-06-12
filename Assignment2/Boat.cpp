@@ -46,12 +46,10 @@ namespace assignment2
 	{
 		Boatplane result(mMaxPassengersCount + plane.mMaxPassengersCount);
 
+		memcpy(result.mPassengers + mPassengersCount, plane.mPassengers, sizeof(Person*) * plane.mPassengersCount);
 		memcpy(result.mPassengers, mPassengers, sizeof(Person*) * mPassengersCount);
 
-		memcpy(result.mPassengers + mPassengersCount, plane.mPassengers, sizeof(Person*) * plane.mPassengersCount);
-
 		result.mPassengersCount = mPassengersCount + plane.mPassengersCount;
-
 		result.mPassengersWeight = mPassengersWeight + plane.mPassengersWeight;
 
 		memset(mPassengers, 0, sizeof(Person*) * mPassengersCount);

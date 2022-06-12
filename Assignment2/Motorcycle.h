@@ -20,7 +20,5 @@ namespace assignment2
 		unsigned int GetDriveSpeed() const;
 
 		void Travel();
-
-	private:
 	};
 }

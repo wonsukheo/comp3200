@@ -13,7 +13,6 @@ namespace assignment2
 		Vehicle(unsigned int maxPassengersCount);
 		Vehicle(unsigned int maxPassengersCount, int status);
 		Vehicle(const Vehicle& other);
-		
 		~Vehicle();
 		
 		Vehicle& operator=(const Vehicle& other);
@@ -37,7 +36,5 @@ namespace assignment2
 		unsigned int mTravelDistance;
 
 		const Person** mPassengers;
-		
-	private:
 	};
 }

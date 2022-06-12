@@ -29,7 +29,5 @@ namespace assignment2
 		unsigned int GetSailSpeed() const;
 
 		void Travel();
-
-	private:
 	};
 }

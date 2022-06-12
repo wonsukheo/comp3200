@@ -27,7 +27,5 @@ namespace assignment2
 		unsigned int mVehicleCount;
 
 		DeusExMachina();
-		//DeusExMachina(const DeusExMachina& other);
-		//DeusExMachina& operator=(const DeusExMachina& other);
 	};
 }
