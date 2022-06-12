@@ -18,13 +18,14 @@ namespace assignment2
 		bool RemoveVehicle(unsigned int i);
 		const Vehicle* GetFurthestTravelled() const;
 		Vehicle* GetVehicle(unsigned int i);
-		
-		~DeusExMachina();
 
 	private:
+		static DeusExMachina* mInstance;
+
 		Vehicle* mVehicles[MAX_ALLOWED_VEHICLE];
 		unsigned int mVehicleCount;
 
 		DeusExMachina();
+		~DeusExMachina();
 	};
 }

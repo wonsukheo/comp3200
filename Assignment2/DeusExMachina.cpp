@@ -2,6 +2,8 @@
 
 namespace assignment2
 {
+	DeusExMachina* DeusExMachina::mInstance = NULL;
+
 	DeusExMachina::DeusExMachina()
 		: mVehicleCount(0)
 	{
@@ -10,20 +12,20 @@ namespace assignment2
 
 	DeusExMachina* DeusExMachina::GetInstance()
 	{
-		static DeusExMachina instance;
+		if (mInstance == NULL)
+		{
+			mInstance = new DeusExMachina();
+		}
 
-		return &instance;
+		return mInstance;
 	}
 
 	DeusExMachina::~DeusExMachina()
 	{
-		
 		for (int i = 0; i < static_cast<int>(mVehicleCount); ++i)
 		{
 			delete mVehicles[i];
 		}
-
-		mVehicleCount = 0;
 	}
 
 	Vehicle* DeusExMachina::GetVehicle(unsigned int i)
@@ -68,6 +70,8 @@ namespace assignment2
 		}
 
 		Vehicle** p = mVehicles + i;
+		
+		Vehicle* temp = *p;
 
 		while (p - mVehicles < static_cast<int>(mVehicleCount - 1))
 		{
@@ -77,6 +81,8 @@ namespace assignment2
 		}
 
 		*p = NULL;
+
+		delete temp;
 
 		--mVehicleCount;
 
