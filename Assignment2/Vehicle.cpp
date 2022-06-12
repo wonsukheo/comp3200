@@ -42,7 +42,7 @@ namespace assignment2
 
 	Vehicle::~Vehicle()
 	{	
-		for (int i = 0; i < mPassengersCount; ++i)
+		for (int i = 0; i < static_cast<int>(mPassengersCount); ++i)
 		{
 			delete mPassengers[i];
 		}
@@ -57,7 +57,7 @@ namespace assignment2
 			return *this;
 		}
 
-		for (int i = 0; i < mPassengersCount; ++i)
+		for (int i = 0; i < static_cast<int>(mPassengersCount); ++i)
 		{
 			delete mPassengers[i];
 		}
