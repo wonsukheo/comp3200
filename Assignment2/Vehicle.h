@@ -27,6 +27,8 @@ namespace assignment2
 		unsigned int GetPassengersCount() const;
 		unsigned int GetMaxPassengersCount() const;
 		
+		virtual void Travel() = 0;
+
 	protected:
 		unsigned int mMaxPassengersCount;
 		unsigned int mPassengersCount;
@@ -37,6 +39,5 @@ namespace assignment2
 		const Person** mPassengers;
 		
 	private:
-		virtual void Travel() = 0;
 	};
 }

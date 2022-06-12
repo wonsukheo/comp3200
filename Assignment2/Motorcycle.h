@@ -19,7 +19,8 @@ namespace assignment2
 		unsigned int GetMaxSpeed() const;
 		unsigned int GetDriveSpeed() const;
 
-	private:
 		void Travel();
+
+	private:
 	};
 }

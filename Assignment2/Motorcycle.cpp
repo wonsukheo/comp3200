@@ -19,9 +19,9 @@ namespace assignment2
 
 	unsigned int Motorcycle::GetDriveSpeed() const
 	{
-		double temp = -pow((mPassengersWeight / 15.0), 3) + 2.0 * mPassengersWeight + 400;
+		double temp = pow((mPassengersWeight / -15.0), 3) + 2.0 * mPassengersWeight + 400;
 
-		return temp > 20 ? static_cast<unsigned int>(temp + 0.5) : 20;
+		return temp > 0 ? static_cast<unsigned int>(temp + 0.5) : 0;
 	}
 
 	void Motorcycle::Travel()

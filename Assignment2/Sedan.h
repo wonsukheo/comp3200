@@ -29,10 +29,10 @@ namespace assignment2
 		unsigned int GetMaxSpeed() const;
 		unsigned int GetDriveSpeed() const;
 
+		void Travel();
+
 	private:
 		const Trailer* mTrailer;
 		int mRested;
-
-		void Travel();
 	};
 }

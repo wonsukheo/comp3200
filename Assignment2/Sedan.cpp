@@ -35,14 +35,9 @@ namespace assignment2
 
 		mRested = other.mRested;
 
-		if (other.mTrailer != NULL)
-		{
-			mTrailer = new Trailer(*other.mTrailer);
-		}
-		else
-		{
-			mTrailer = NULL;
-		}
+		delete mTrailer;
+		
+		mTrailer = new Trailer(*other.mTrailer);
 
 		return *this;
 	}
