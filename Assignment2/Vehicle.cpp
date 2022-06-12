@@ -26,8 +26,6 @@ namespace assignment2
 		, mStatus(other.mStatus)
 		, mTravelDistance(other.mTravelDistance)
 	{
-		delete[] mPassengers;
-
 		mPassengers = new const Person*[other.mMaxPassengersCount];
 	
 		if (mPassengers != NULL)
