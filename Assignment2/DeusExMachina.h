@@ -20,9 +20,7 @@ namespace assignment2
 		Vehicle* GetVehicle(unsigned int i);
 		
 		~DeusExMachina();
-
 	private:
-		static DeusExMachina* mInstance;
 
 		Vehicle* mVehicles[MAX_ALLOWED_VEHICLE];
 		unsigned int mVehicleCount;
