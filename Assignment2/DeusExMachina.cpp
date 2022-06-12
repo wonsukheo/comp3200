@@ -22,7 +22,8 @@ namespace assignment2
 
 	DeusExMachina::~DeusExMachina()
 	{
-		//delete[] mVehicles;
+		memset(mVehicles, 0, sizeof(Vehicle*) * MAX_ALLOWED_VEHICLE);
+		mVehicleCount = 0;
 
 		mInstance = NULL;
 	}
