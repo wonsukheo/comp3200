@@ -28,6 +28,8 @@ namespace assignment2
 		mWeight = other.mWeight;
 
 		mName = other.mName;
+
+		return *this;
 	}
 
 	const std::string& Person::GetName() const
