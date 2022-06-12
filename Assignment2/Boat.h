@@ -22,9 +22,8 @@ namespace assignment2
 		unsigned int GetSailSpeed() const;
 
 		Boatplane operator+(Airplane& plane);
-		void Travel();
 
 	private:
-		//unsigned int Travel();
+		void Travel();
 	};
 }

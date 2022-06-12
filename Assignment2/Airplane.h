@@ -25,12 +25,9 @@ namespace assignment2
 		unsigned int GetFlySpeed() const;
 		unsigned int GetDriveSpeed() const;
 
-		Boatplane operator+(Boat& boat);
-
-		void Travel();
-		
-
+		Boatplane operator+(Boat& boat);	
+	
 	private:
-		//unsigned int Travel();
+		void Travel();
 	};
 }

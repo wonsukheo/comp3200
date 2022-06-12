@@ -9,7 +9,6 @@ namespace assignment2
 
 	UBoat::~UBoat()
 	{
-
 	}
 
 	unsigned int UBoat::GetMaxSpeed() const

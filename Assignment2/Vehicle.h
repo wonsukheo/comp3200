@@ -8,9 +8,8 @@ namespace assignment2
 	class Vehicle
 	{
 		friend class DeusExMachina;
+
 	public:
-
-
 		Vehicle(unsigned int maxPassengersCount);
 		Vehicle(unsigned int maxPassengersCount, int status);
 		Vehicle(const Vehicle& other);
@@ -27,9 +26,7 @@ namespace assignment2
 		const Person* GetPassenger(unsigned int i) const;
 		unsigned int GetPassengersCount() const;
 		unsigned int GetMaxPassengersCount() const;
-
-		virtual void Travel() = 0;
-
+		
 	protected:
 		unsigned int mMaxPassengersCount;
 		unsigned int mPassengersCount;
@@ -38,9 +35,8 @@ namespace assignment2
 		unsigned int mTravelDistance;
 
 		const Person** mPassengers;
-
-
+		
 	private:
-		//virtual unsigned int Travel() = 0;
+		virtual void Travel() = 0;
 	};
 }

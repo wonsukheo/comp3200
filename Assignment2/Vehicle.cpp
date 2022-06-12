@@ -33,13 +33,12 @@ namespace assignment2
 	
 		if (mPassengers != NULL)
 		{
-			unsigned int i = 0;
+			const Person** p = mPassengers;
+			const Person** q = other.mPassengers;
 
-			while (i < mPassengersCount)
+			while (p - mPassengers < static_cast<int>(mPassengersCount))
 			{
-				mPassengers[i] = new Person(*(other.mPassengers[i]));
-
-				i++;
+				*p++ = new Person(**q++);
 			}
 		}
 	}
@@ -47,8 +46,6 @@ namespace assignment2
 	Vehicle::~Vehicle()
 	{
 		delete[] mPassengers;
-
-		//delete mPassengers;
 	}
 
 	Vehicle& Vehicle::operator=(const Vehicle& other)
@@ -58,8 +55,7 @@ namespace assignment2
 			return *this;
 		}
 
-		delete[] *mPassengers;
-		delete mPassengers;
+		delete[] mPassengers;
 
 		mMaxPassengersCount = other.mMaxPassengersCount;
 		mPassengersCount = other.mPassengersCount;
@@ -71,14 +67,12 @@ namespace assignment2
 
 		if (mPassengers != NULL)
 		{
-			const Person* start_p = *(other.mPassengers);
-			const Person* p = start_p;
-			const Person* q = *mPassengers;
+			const Person** p = mPassengers;
+			const Person** q = other.mPassengers;
 
-			while (static_cast<unsigned int>(p - start_p) < mPassengersCount)
+			while (p - mPassengers < static_cast<int>(mPassengersCount))
 			{
-				q = new Person(*p++);
-				++q;
+				*p++ = new Person(**q++);
 			}
 		}
 
@@ -101,14 +95,16 @@ namespace assignment2
 
 	bool Vehicle::RemovePassenger(unsigned int i)
 	{
-		if (i >= mPassengersCount)
+		if (i >= mPassengersCount || mPassengersCount > 100)
 		{
 			return false;
 		}
 
-		mPassengersWeight -= (*(mPassengers + i))->GetWeight();
+		const Person* p = *(mPassengers + i);
 
-		delete *(mPassengers + i);
+		mPassengersWeight -= p->GetWeight();
+
+		delete p;
 
 		while (i < mPassengersCount - 1)
 		{

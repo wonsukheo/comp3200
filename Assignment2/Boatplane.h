@@ -28,9 +28,7 @@ namespace assignment2
 		unsigned int GetFlySpeed() const;
 		unsigned int GetSailSpeed() const;
 
-		void Travel();
-
 	private:
-		//unsigned int Travel();
+		void Travel();
 	};
 }

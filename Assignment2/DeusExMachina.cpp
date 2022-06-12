@@ -22,18 +22,30 @@ namespace assignment2
 
 	DeusExMachina::~DeusExMachina()
 	{
-		delete mInstance;
+		//delete mVehicles;
+
+		mInstance = NULL;
+	}
+
+	Vehicle* DeusExMachina::GetVehicle(unsigned int i)
+	{
+		if (i < mVehicleCount)
+		{
+			return mVehicles[i];
+		}
+
+		return NULL;
 	}
 
 	void DeusExMachina::Travel() const
 	{
-		unsigned int i = 0;
+		Vehicle* const* p = mVehicles;
 
-		while (i < mVehicleCount)
+		while (p - mVehicles < static_cast<int>(mVehicleCount))
 		{
-			mVehicles[i]->Travel();
+			(*p)->Travel();
 
-			++i;
+			++p;
 		}
 	}
 
@@ -61,16 +73,18 @@ namespace assignment2
 			return false;
 		}
 
-		while (i < mVehicleCount - 1)
-		{
-			mVehicles[i] = mVehicles[i + 1];
+		Vehicle** p = mVehicles + i;
 
-			++i;
+		while (p - mVehicles < static_cast<int>(mVehicleCount - 1))
+		{
+			*p = *(p + 1);
+
+			++p;
 		}
 
-		mVehicles[i] = NULL;
+		p = NULL;
 
-		mVehicleCount--;
+		--mVehicleCount;
 
 		return true;
 	}
@@ -85,19 +99,17 @@ namespace assignment2
 		unsigned int max = 0;
 		unsigned int maxIndex = 0;
 
-		unsigned int i = 0;
+		Vehicle* const* p = mVehicles;
 
-		Vehicle* p = *mVehicles;
-
-		while (i < mVehicleCount)
+		while (p - mVehicles < static_cast<int>(mVehicleCount))
 		{
-			if (p->mTravelDistance > max)
+			if ((*p)->mTravelDistance > max)
 			{
-				max = p->mTravelDistance;
-				maxIndex = i;
+				max = (*p)->mTravelDistance;
+				maxIndex = p - mVehicles;
 			}
 
-			p = *(mVehicles + ++i);
+			++p;
 		}
 
 		return mVehicles[maxIndex];

@@ -6,8 +6,6 @@
 
 namespace assignment2
 {
-	
-
 	class UBoat : public Vehicle, public IDivable, public ISailable
 	{
 		const static int TRAVEL = 2;
@@ -22,9 +20,7 @@ namespace assignment2
 		unsigned int GetSailSpeed() const;
 		unsigned int GetDiveSpeed() const;
 
-		void Travel();
-
 	private:
-		//unsigned int Travel();
+		void Travel();
 	};
 }

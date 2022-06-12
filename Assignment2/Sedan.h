@@ -6,8 +6,6 @@
 
 namespace assignment2
 {
-	
-
 	class Trailer;
 
 	class Sedan : public Vehicle, public IDrivable
@@ -28,12 +26,10 @@ namespace assignment2
 		unsigned int GetMaxSpeed() const;
 		unsigned int GetDriveSpeed() const;
 
-		void Travel();
-
 	private:
 		const Trailer* mTrailer;
 		int mRested;
 
-		//unsigned int Travel();
+		void Travel();
 	};
 }
