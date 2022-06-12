@@ -11,6 +11,7 @@ namespace assignment2
 
 	Sedan::~Sedan()
 	{
+		delete mTrailer;
 	}
 
 	Sedan::Sedan(const Sedan& other)

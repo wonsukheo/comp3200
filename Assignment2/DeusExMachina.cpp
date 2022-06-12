@@ -24,7 +24,7 @@ namespace assignment2
 	{
 		//delete mVehicles;
 
-		mInstance = NULL;
+		delete mInstance;
 	}
 
 	Vehicle* DeusExMachina::GetVehicle(unsigned int i)
@@ -51,11 +51,6 @@ namespace assignment2
 
 	bool DeusExMachina::AddVehicle(Vehicle* vehicle)
 	{
-		if (mInstance == NULL)
-		{
-			return false;
-		}
-
 		if (mVehicleCount >= MAX_ALLOWED_VEHICLE)
 		{
 			return false;
@@ -82,7 +77,7 @@ namespace assignment2
 			++p;
 		}
 
-		p = NULL;
+		*p = NULL;
 
 		--mVehicleCount;
 
@@ -91,7 +86,7 @@ namespace assignment2
 
 	const Vehicle* DeusExMachina::GetFurthestTravelled() const
 	{
-		if (mVehicleCount == 0)
+		if (mVehicleCount == 0 || mVehicles == NULL)
 		{
 			return NULL;
 		}
