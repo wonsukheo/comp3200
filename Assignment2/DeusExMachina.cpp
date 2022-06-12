@@ -22,6 +22,11 @@ namespace assignment2
 
 	DeusExMachina::~DeusExMachina()
 	{
+		for (int i = 0; i < mVehicleCount; ++i)
+		{
+			delete mVehicles[i];
+		}
+
 		memset(mVehicles, 0, sizeof(Vehicle*) * MAX_ALLOWED_VEHICLE);
 		mVehicleCount = 0;
 

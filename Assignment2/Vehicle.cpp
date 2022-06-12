@@ -1,4 +1,5 @@
 #include "Vehicle.h"
+#include <iostream>
 
 namespace assignment2
 {
@@ -42,7 +43,14 @@ namespace assignment2
 
 	Vehicle::~Vehicle()
 	{
-		delete[] mPassengers;
+		unsigned int i = 0;
+		
+		for (int i = 0; i < mPassengersCount; ++i)
+		{
+			delete mPassengers[i];
+		}
+
+		delete mPassengers;
 	}
 
 	Vehicle& Vehicle::operator=(const Vehicle& other)
