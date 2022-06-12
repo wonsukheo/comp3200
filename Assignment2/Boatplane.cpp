@@ -34,14 +34,14 @@ namespace assignment2
 	unsigned int Boatplane::GetFlySpeed() const
 	{
 
-		return static_cast<unsigned int>(150 * exp(-(static_cast<int>(mPassengersWeight) + 500) / static_cast<double>(300)) + 0.5);
+		return static_cast<unsigned int>(150 * exp(-(static_cast<int>(mPassengersWeight) + 500) / 300.0) + 0.5);
 	}
 
 	unsigned int Boatplane::GetSailSpeed() const
 	{
-		unsigned int temp = static_cast<unsigned int>(800 - 1.7 * mPassengersWeight + 0.5);
+		double temp = 800 - 1.7 * mPassengersWeight;
 
-		return temp > 20 ? temp : 20;
+		return temp > 20 ? static_cast<unsigned int>(temp + 0.5) : 20;
 	}
 
 	void Boatplane::Travel()
