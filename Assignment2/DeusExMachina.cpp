@@ -22,9 +22,9 @@ namespace assignment2
 
 	DeusExMachina::~DeusExMachina()
 	{
-		//delete mVehicles;
+		//delete[] mVehicles;
 
-		delete mInstance;
+		mInstance = NULL;
 	}
 
 	Vehicle* DeusExMachina::GetVehicle(unsigned int i)
