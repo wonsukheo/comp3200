@@ -33,6 +33,11 @@ namespace assignment2
 	{
 		Vehicle::operator=(other);
 
+		if (this == &other)
+		{
+			return *this;
+		}
+
 		mRested = other.mRested;
 
 		delete mTrailer;
