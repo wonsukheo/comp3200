@@ -18,6 +18,7 @@ namespace assignment2
 		bool RemoveVehicle(unsigned int i);
 		const Vehicle* GetFurthestTravelled() const;
 		Vehicle* GetVehicle(unsigned int i);
+		
 		~DeusExMachina();
 
 	private:

@@ -1,5 +1,4 @@
 #include "Vehicle.h"
-#include <iostream>
 
 namespace assignment2
 {
@@ -42,9 +41,7 @@ namespace assignment2
 	}
 
 	Vehicle::~Vehicle()
-	{
-		unsigned int i = 0;
-		
+	{	
 		for (int i = 0; i < mPassengersCount; ++i)
 		{
 			delete mPassengers[i];
@@ -60,7 +57,12 @@ namespace assignment2
 			return *this;
 		}
 
-		delete[] mPassengers;
+		for (int i = 0; i < mPassengersCount; ++i)
+		{
+			delete mPassengers[i];
+		}
+
+		delete mPassengers;
 
 		mMaxPassengersCount = other.mMaxPassengersCount;
 		mPassengersCount = other.mPassengersCount;

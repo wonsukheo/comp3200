@@ -12,12 +12,9 @@ namespace assignment2
 
 	DeusExMachina* DeusExMachina::GetInstance()
 	{
-		if (mInstance == NULL)
-		{
-			mInstance = new DeusExMachina();
-		}
+		static DeusExMachina instance;
 
-		return mInstance;
+		return &instance;
 	}
 
 	DeusExMachina::~DeusExMachina()
@@ -29,8 +26,6 @@ namespace assignment2
 
 		memset(mVehicles, 0, sizeof(Vehicle*) * MAX_ALLOWED_VEHICLE);
 		mVehicleCount = 0;
-
-		mInstance = NULL;
 	}
 
 	Vehicle* DeusExMachina::GetVehicle(unsigned int i)
