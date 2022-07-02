@@ -155,7 +155,14 @@ namespace lab7
 	template <typename T>
 	std::ostream& operator<<(std::ostream& os, const std::vector<T>& v)
 	{
-		for (typename std::vector<T>::const_iterator iter = v.begin(); iter != v.end(); ++iter)
+		typename std::vector<T>::const_iterator iter = v.begin();
+
+		if (!v.empty())
+		{
+			os << *iter++;
+		}
+
+		for (; iter != v.end(); ++iter)
 		{
 			os << ", " << *iter;
 		}
