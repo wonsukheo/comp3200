@@ -5,8 +5,8 @@ namespace lab8
 	{
 	public:
 		FixedVector();
-		FixedVector(const FixedVector& other) = default;
-		~FixedVector() = default;
+		//FixedVector(const FixedVector& other) = default;
+		//~FixedVector() = default;
 		
 		bool Add(const T& t);
 		bool Remove(const T& t);
@@ -27,7 +27,6 @@ namespace lab8
 		: mCapacity(N)
 		, mSize(0)
 	{
-
 	}
 
 	template<typename T, size_t N>

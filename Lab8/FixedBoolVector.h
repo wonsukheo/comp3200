@@ -7,8 +7,8 @@ namespace lab8
 	{
 	public:
 		FixedBoolVector();
-		FixedBoolVector(const FixedBoolVector& other) = default;
-		~FixedBoolVector() = default;
+		//FixedBoolVector(const FixedBoolVector& other) = default;
+		//~FixedBoolVector() = default;
 
 		bool Add(const bool element);
 		bool Remove(const bool element);
