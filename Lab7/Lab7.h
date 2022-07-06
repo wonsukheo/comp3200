@@ -56,7 +56,7 @@ namespace lab7
 	{
 		std::vector<T> rv;
 
-		for (typename std::vector<T>::reverse_iterator iter = rv.rend(); iter != rv.rbegin(); --iter)
+		for (typename std::vector<T>::const_reverse_iterator iter = v.rbegin(); iter != v.rend(); ++iter)
 		{
 			rv.push_back(*iter);
 		}
@@ -65,19 +65,19 @@ namespace lab7
 	}
 
 	template <class InputIterator, typename T>
-	InputIterator Find(const InputIterator* begin, const InputIterator* end, const T& value)
+	InputIterator myFind(InputIterator first, InputIterator last, const T& val)
 	{
-		while (begin != end)
+		while (first != last)
 		{
-			if (*begin == value)
+			if (*first == val)
 			{
-				return begin;
+				return first;
 			}
 
-			++begin;
+			++first;
 		}
 
-		return NULL;
+		return last;
 	}
 
 	template <typename T>
@@ -87,7 +87,13 @@ namespace lab7
 
 		for (typename std::vector<T>::const_iterator iter = v1.begin(); iter != v1.end(); ++iter)
 		{
-			if (::Find(combined.begin(), combined.end(), *iter))
+			if (combined.empty())
+			{
+				combined.push_back(*iter);
+				continue;
+			}
+
+			if (::myFind(combined.begin(), combined.end(), *iter) == combined.end())
 			{
 				combined.push_back(*iter);
 			}
@@ -95,7 +101,13 @@ namespace lab7
 
 		for (typename std::vector<T>::const_iterator iter = v2.begin(); iter != v2.end(); ++iter)
 		{
-			if (::Find(combined.begin(), combined.end(), *iter))
+			if (combined.empty())
+			{
+				combined.push_back(*iter);
+				continue;
+			}
+
+			if (::myFind(combined.begin(), combined.end(), *iter) == combined.end())
 			{
 				combined.push_back(*iter);
 			}
@@ -111,28 +123,46 @@ namespace lab7
 
 		for (typename std::map<K, V>::const_iterator iter = m1.begin(); iter != m1.end(); ++iter)
 		{
-			if (::Find(combined.begin(), combined.end(), *iter))
+			if (combined.empty())
 			{
-				combined.insert(*iter);
+				combined.insert(std::pair<K, V>(iter->first, iter->second));
+				continue;
+			}
+
+			if (::myFind(combined.begin(), combined.end(), *iter) == combined.end())
+			{
+				combined.insert(std::pair<K, V>(iter->first, iter->second));
 			}
 		}
 
 		for (typename std::map<K, V>::const_iterator iter = m2.begin(); iter != m2.end(); ++iter)
 		{
-			if (::Find(combined.begin(), combined.end(), *iter))
+			if (combined.empty())
 			{
-				combined.insert(*iter);
+				combined.insert(std::pair<K, V>(iter->first, iter->second));
+				continue;
+			}
+
+			if (::myFind(combined.begin(), combined.end(), *iter) == combined.end())
+			{
+				combined.insert(typename std::pair<K, V>(iter->first, iter->second));
 			}
 		}
 
 		return combined;
 	}
 
-
 	template <typename T>
 	std::ostream& operator<<(std::ostream& os, const std::vector<T>& v)
 	{
-		for (typename std::vector<T>::const_iterator iter = v.begin(); iter != v.end(); ++iter)
+		typename std::vector<T>::const_iterator iter = v.begin();
+
+		if (!v.empty())
+		{
+			os << *iter++;
+		}
+
+		for (; iter != v.end(); ++iter)
 		{
 			os << ", " << *iter;
 		}
