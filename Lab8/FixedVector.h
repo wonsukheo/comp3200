@@ -5,10 +5,10 @@ namespace lab8
 	{
 	public:
 		FixedVector();
-		//FixedVector(const FixedVector& other) = default;
-		//~FixedVector() = default;
+		FixedVector(const FixedVector& other) = default;
+		~FixedVector() = default;
 		
-		bool Add(const T& t);
+		bool Add(const T* t);
 		bool Remove(const T& t);
 		T Get(const unsigned int index) const;
 		T& operator[](const unsigned int index);
@@ -30,7 +30,7 @@ namespace lab8
 	}
 
 	template<typename T, size_t N>
-	bool FixedVector<T, N>::Add(const T& t)
+	bool FixedVector<T, N>::Add(const T* t)
 	{
 		if (mSize == mCapacity)
 		{
