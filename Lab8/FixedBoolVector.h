@@ -1,14 +1,15 @@
 #pragma once
+#include <vector>
 
 namespace lab8
 {
-	template<bool, size_t N>
-	class FixedBoolVector
+	template<size_t N>
+	class FixedVector<bool, N>
 	{
 	public:
-		FixedBoolVector();
-		FixedBoolVector(const FixedBoolVector& other) = default;
-		~FixedBoolVector() = default;
+		FixedVector();
+		FixedVector(const FixedVector& other) = default;
+		~FixedVector() = default;
 
 		bool Add(const bool element);
 		bool Remove(const bool element);
@@ -19,23 +20,21 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
-		int32_t mData;
-		const size_t mCapacity;
+		uint32_t mData;
 		size_t mSize;
 	};
 
-	template<bool T, size_t N>
-	FixedBoolVector<T, N>::FixedBoolVector()
-		: mCapacity(N)
-		, mData(0)
+	template<size_t N>
+	FixedVector<bool, N>::FixedVector()
+		: mData(0)
 		, mSize(0)
 	{
 	}
 
-	template<bool T, size_t N>
-	bool FixedBoolVector<T, N>::Add(const bool element)
+	template<size_t N>
+	bool FixedVector<bool, N>::Add(const bool element)
 	{
-		if (mSize == mCapacity)
+		if (mSize == N)
 		{
 			return false;
 		}
@@ -45,8 +44,8 @@ namespace lab8
 		return true;
 	}
 
-	template<bool T, size_t N>
-	bool FixedBoolVector<T, N>::Remove(const bool element)
+	template<size_t N>
+	bool FixedVector<bool, N>::Remove(const bool element)
 	{
 		int index = GetIndex(element);
 
@@ -56,7 +55,13 @@ namespace lab8
 		}
 
 		mData >>= 1;
-		
+
+		if (index == 0)
+		{
+			--mSize;
+			return true;
+		}
+
 		if (element == true)
 		{
 			mData -= pow(2, index - 1);
@@ -71,28 +76,28 @@ namespace lab8
 		return true;
 	}
 
-	template<bool T, size_t N>
-	const bool& FixedBoolVector<T, N>::Get(const unsigned int index) const
+	template<size_t N>
+	const bool& FixedVector<bool, N>::Get(const unsigned int index) const
 	{
-		int32_t temp = mData >> mSize - 1 - index;
+		uint32_t temp = mData >> index;
 
 		return temp % 2 == 0 ? false : true;
 	}
 
-	template<bool T, size_t N>
-	const bool& FixedBoolVector<T, N>::operator[](const unsigned int index) const
+	template<size_t N>
+	const bool& FixedVector<bool, N>::operator[](const unsigned int index) const
 	{
-		int32_t temp = mData >> mSize - 1 - index;
+		uint32_t temp = mData >> index;
 
 		return temp % 2 == 0 ? false : true;
 	}
 
-	template<bool T, size_t N>
-	int FixedBoolVector<T, N>::GetIndex(const bool element) const
+	template<size_t N>
+	int FixedVector<bool, N>::GetIndex(const bool element) const
 	{
 		size_t index = 0;
 
-		int32_t temp = mData;
+		uint32_t temp = mData;
 		
 		while (index < mSize)
 		{
@@ -109,15 +114,15 @@ namespace lab8
 		return -1;
 	}
 
-	template<bool T, size_t N>
-	size_t FixedBoolVector<T, N>::GetSize() const
+	template<size_t N>
+	size_t FixedVector<bool, N>::GetSize() const
 	{
 		return mSize;
 	}
 
-	template<bool T, size_t N>
-	size_t FixedBoolVector<T, N>::GetCapacity() const
+	template<size_t N>
+	size_t FixedVector<bool, N>::GetCapacity() const
 	{
-		return mCapacity;
+		return N;
 	}
 }
