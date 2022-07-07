@@ -73,6 +73,10 @@ namespace lab8
 		{
 			mData[index / LEN] += static_cast<uint32_t>(pow(2, index - 1));
 		}
+		else
+		{
+			mData[index / LEN] -= static_cast<uint32_t>(pow(2, index - 1));
+		}
 
 		//push from next mData[next index]
 	push:
