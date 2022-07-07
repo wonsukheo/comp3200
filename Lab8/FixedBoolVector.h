@@ -19,8 +19,9 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
+		
 		enum { LEN = 32 };
-		uint32_t mData[N / LEN + 1];
+		uint32_t mData[(N + LEN - 1) / LEN];
 		size_t mSize;
 	};
 
@@ -59,6 +60,8 @@ namespace lab8
 			return false;
 		}
 
+		bool firstData = mData[index / LEN] % 2 == 0 ? false : true;
+
 		mData[index / LEN] >>= 1;
 
 		if (index % 32 == 0)
@@ -66,11 +69,7 @@ namespace lab8
 			goto push;
 		}
 
-		if (element == true)
-		{
-			mData[index / LEN] -= static_cast<uint32_t>(pow(2, index - 1));
-		}
-		else
+		if (firstData == true)
 		{
 			mData[index / LEN] += static_cast<uint32_t>(pow(2, index - 1));
 		}
@@ -79,7 +78,7 @@ namespace lab8
 	push:
 		size_t i = index / LEN;
 
-		while (i < mSize / LEN)
+		while (i < (mSize - 1) / LEN)
 		{
 			bool firstElement = Get((i + 1) * 32);
 
@@ -99,7 +98,7 @@ namespace lab8
 	template<size_t N>
 	const bool FixedVector<bool, N>::Get(const unsigned int index) const
 	{
-		uint32_t temp = mData[index / LEN] >> index;
+		uint32_t temp = mData[index / LEN] >> index % LEN;
 
 		return temp % 2 == 0 ? false : true;
 	}
