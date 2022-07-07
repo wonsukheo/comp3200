@@ -13,8 +13,8 @@ namespace lab8
 
 		bool Add(const bool element);
 		bool Remove(const bool element);
-		const bool& Get(const unsigned int index) const;
-		const bool& operator[](const unsigned int index) const;
+		const bool Get(const unsigned int index) const;
+		const bool operator[](const unsigned int index) const;
 		int GetIndex(const bool element) const;
 		size_t GetSize() const;
 		size_t GetCapacity() const;
@@ -64,11 +64,11 @@ namespace lab8
 
 		if (element == true)
 		{
-			mData -= pow(2, index - 1);
+			mData -= static_cast<uint32_t>(pow(2, index - 1));
 		}
 		else
 		{
-			mData += pow(2, index - 1);
+			mData += static_cast<uint32_t>(pow(2, index - 1));
 		}
 
 		--mSize;
@@ -77,7 +77,7 @@ namespace lab8
 	}
 
 	template<size_t N>
-	const bool& FixedVector<bool, N>::Get(const unsigned int index) const
+	const bool FixedVector<bool, N>::Get(const unsigned int index) const
 	{
 		uint32_t temp = mData >> index;
 
@@ -85,7 +85,7 @@ namespace lab8
 	}
 
 	template<size_t N>
-	const bool& FixedVector<bool, N>::operator[](const unsigned int index) const
+	const bool FixedVector<bool, N>::operator[](const unsigned int index) const
 	{
 		uint32_t temp = mData >> index;
 
