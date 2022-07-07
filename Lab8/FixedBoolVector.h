@@ -2,7 +2,7 @@
 
 namespace lab8
 {
-	template<bool B, size_t N>
+	template<bool, size_t N>
 	class FixedBoolVector
 	{
 	public:
@@ -19,21 +19,21 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
-		uint32_t mData;
+		int32_t mData;
 		const size_t mCapacity;
 		size_t mSize;
 	};
 
-	template<bool B, size_t N>
-	FixedBoolVector<B, N>::FixedBoolVector()
+	template<bool T, size_t N>
+	FixedBoolVector<T, N>::FixedBoolVector()
 		: mCapacity(N)
 		, mData(0)
 		, mSize(0)
 	{
 	}
 
-	template<bool B, size_t N>
-	bool FixedBoolVector<B, N>::Add(const bool element)
+	template<bool T, size_t N>
+	bool FixedBoolVector<T, N>::Add(const bool element)
 	{
 		if (mSize == mCapacity)
 		{
@@ -45,8 +45,8 @@ namespace lab8
 		return true;
 	}
 
-	template<bool B, size_t N>
-	bool FixedBoolVector<B, N>::Remove(const bool element)
+	template<bool T, size_t N>
+	bool FixedBoolVector<T, N>::Remove(const bool element)
 	{
 		int index = GetIndex(element);
 
@@ -71,28 +71,28 @@ namespace lab8
 		return true;
 	}
 
-	template<bool B, size_t N>
-	const bool& FixedBoolVector<B, N>::Get(const unsigned int index) const
+	template<bool T, size_t N>
+	const bool& FixedBoolVector<T, N>::Get(const unsigned int index) const
 	{
-		uint32_t temp = mData >> mSize - 1 - index;
+		int32_t temp = mData >> mSize - 1 - index;
 
 		return temp % 2 == 0 ? false : true;
 	}
 
-	template<bool B, size_t N>
-	const bool& FixedBoolVector<B, N>::operator[](const unsigned int index) const
+	template<bool T, size_t N>
+	const bool& FixedBoolVector<T, N>::operator[](const unsigned int index) const
 	{
-		uint32_t temp = mData >> mSize - 1 - index;
+		int32_t temp = mData >> mSize - 1 - index;
 
 		return temp % 2 == 0 ? false : true;
 	}
 
-	template<bool B, size_t N>
-	int FixedBoolVector<B, N>::GetIndex(const bool element) const
+	template<bool T, size_t N>
+	int FixedBoolVector<T, N>::GetIndex(const bool element) const
 	{
 		size_t index = 0;
 
-		uint32_t temp = mData;
+		int32_t temp = mData;
 		
 		while (index < mSize)
 		{
@@ -109,14 +109,14 @@ namespace lab8
 		return -1;
 	}
 
-	template<bool B, size_t N>
-	size_t FixedBoolVector<B, N>::GetSize() const
+	template<bool T, size_t N>
+	size_t FixedBoolVector<T, N>::GetSize() const
 	{
 		return mSize;
 	}
 
-	template<bool B, size_t N>
-	size_t FixedBoolVector<B, N>::GetCapacity() const
+	template<bool T, size_t N>
+	size_t FixedBoolVector<T, N>::GetCapacity() const
 	{
 		return mCapacity;
 	}
