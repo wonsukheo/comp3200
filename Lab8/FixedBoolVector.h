@@ -88,7 +88,7 @@ namespace lab8
 
 			if (firstElement == true)
 			{
-				mData[i] += static_cast<uint32_t>(pow(2, (i + 1) * 32 - 1));
+				mData[i] += static_cast<uint32_t>(pow(2, LEN - 1));
 			}
 
 			mData[++i] >>= 1;
