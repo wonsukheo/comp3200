@@ -19,7 +19,7 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
-		bool mElements[N];
+		uint32_t mData;
 		const size_t mCapacity;
 		size_t mSize;
 	};
@@ -27,9 +27,9 @@ namespace lab8
 	template<bool B, size_t N>
 	FixedBoolVector<B, N>::FixedBoolVector()
 		: mCapacity(N)
+		, mData(0)
 		, mSize(0)
 	{
-
 	}
 
 	template<bool B, size_t N>
@@ -40,7 +40,7 @@ namespace lab8
 			return false;
 		}
 
-		mElements[mSize++] = element;
+		mData |= element << mSize++;
 
 		return true;
 	}
@@ -48,59 +48,62 @@ namespace lab8
 	template<bool B, size_t N>
 	bool FixedBoolVector<B, N>::Remove(const bool element)
 	{
-		bool* p = mElements;
+		int index = GetIndex(element);
 
-		while (static_cast<unsigned int>(p - mElements) < mSize)
+		if (index == -1)
 		{
-			if (*p == element)
-			{
-				while (p - mElements < mSize - 1)
-				{
-					*p = *(p + 1);
-
-					++p;
-				}
-
-				--mSize;
-
-				return true;
-			}
-
-			++p;
+			return false;
 		}
 
-		return false;
+		mData >>= 1;
+		
+		if (element == true)
+		{
+			mData -= pow(2, index - 1);
+		}
+		else
+		{
+			mData += pow(2, index - 1);
+		}
+
+		--mSize;
+
+		return true;
 	}
 
 	template<bool B, size_t N>
 	bool FixedBoolVector<B, N>::Get(const unsigned int index) const
 	{
-		//static_assert(index < mSize);
+		uint32_t temp = mData >> mSize - 1 - index;
 
-		return mElements[index];
+		return temp % 2 == 0 ? false : true;
 	}
 
 	template<bool B, size_t N>
 	bool FixedBoolVector<B, N>::operator[](const unsigned int index) const
 	{
-		//static_assert(index < mSize);
+		uint32_t temp = mData >> mSize - 1 - index;
 
-		return mElements[index];
+		return temp % 2 == 0 ? false : true;
 	}
 
 	template<bool B, size_t N>
-	int FixedBoolVector<B, N>::GetIndex(const bool t) const
+	int FixedBoolVector<B, N>::GetIndex(const bool element) const
 	{
-		const bool* p = mElements;
+		size_t index = 0;
 
-		while (static_cast<unsigned int>(p - mElements) < mSize)
+		uint32_t temp = mData;
+		
+		while (index < mSize)
 		{
-			if (*p == t)
+			if (temp % 2 == element)
 			{
-				return p - mElements;
+				return index;
 			}
 
-			++p;
+			temp >>= 1;
+
+			++index;
 		}
 
 		return -1;
