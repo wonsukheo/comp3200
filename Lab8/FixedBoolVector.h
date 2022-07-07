@@ -19,7 +19,7 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
-		enum {LEN = 32};
+		enum { LEN = 32 };
 		uint32_t mData[N / LEN + 1];
 		size_t mSize;
 	};
@@ -63,8 +63,7 @@ namespace lab8
 
 		if (index % 32 == 0)
 		{
-			--mSize;
-			return true;
+			goto push;
 		}
 
 		if (element == true)
@@ -74,6 +73,22 @@ namespace lab8
 		else
 		{
 			mData[index / LEN] += static_cast<uint32_t>(pow(2, index - 1));
+		}
+
+		//push from next mData[next index]
+	push:
+		size_t i = index / LEN;
+
+		while (i < mSize / LEN)
+		{
+			bool firstElement = Get((i + 1) * 32);
+
+			if (firstElement == true)
+			{
+				mData[i] += static_cast<uint32_t>(pow(2, (i + 1) * 32 - 1));
+			}
+
+			mData[++i] >>= 1;
 		}
 
 		--mSize;
@@ -100,34 +115,28 @@ namespace lab8
 	template<size_t N>
 	int FixedVector<bool, N>::GetIndex(const bool element) const
 	{
-		while (true)
+		size_t index = 0;
+
+		uint32_t temp = mData[index];
+
+		while (index < mSize)
 		{
-			size_t index = 0;
-
-			uint32_t temp = mData[index / LEN];
-
-			while (index < mSize)
+			if (temp % 2 == element)
 			{
-				if (temp % 2 == element)
-				{
-					return index;
-				}
-
-				temp >>= 1;
-
-				++index;
-
-				if (index % LEN == 0)
-				{
-					temp = mData[index / LEN];
-				}
+				return index;
 			}
 
-			if (index == mSize)
+			temp >>= 1;
+
+			++index;
+
+			if (index % LEN == 0)
 			{
-				return -1;
+				temp = mData[index / LEN];
 			}
 		}
+
+		return -1;
 	}
 
 	template<size_t N>
