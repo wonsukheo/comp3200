@@ -60,8 +60,6 @@ namespace lab8
 			return false;
 		}
 
-		bool firstData = mData[index / LEN] % 2 == 0 ? false : true;
-
 		mData[index / LEN] >>= 1;
 
 		if (index % 32 == 0)
@@ -69,7 +67,7 @@ namespace lab8
 			goto push;
 		}
 
-		if (firstData == true)
+		if (element == false)
 		{
 			mData[index / LEN] += static_cast<uint32_t>(pow(2, index - 1));
 		}
@@ -124,7 +122,7 @@ namespace lab8
 
 		while (index < mSize)
 		{
-			if (temp % 2 == element)
+			if (static_cast<bool>(temp & 1) == element)
 			{
 				return index;
 			}
