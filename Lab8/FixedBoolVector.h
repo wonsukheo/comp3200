@@ -54,7 +54,7 @@ namespace lab8
 	bool FixedVector<bool, N>::Remove(const bool element)
 	{
 		int index = GetIndex(element);
-		int i = index / 32;
+		unsigned int i = index / LEN;
 
 		if (index == -1)
 		{
@@ -86,11 +86,11 @@ namespace lab8
 
 			if (firstElement == true)
 			{
-				mData[i] |= (1 << (32 * (i + 1) - 1));
+				mData[i] |= (1 << (LEN * (i + 1) - 1));
 			}
 			else
 			{
-				mData[i] &= ~(1 << (32 * (i + 1) - 1));
+				mData[i] &= ~(1 << (LEN * (i + 1) - 1));
 			}
 
 			mData[++i] >>= 1;
