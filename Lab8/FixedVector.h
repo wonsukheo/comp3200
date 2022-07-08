@@ -5,10 +5,13 @@ namespace lab8
 	{
 	public:
 		FixedVector();
+		FixedVector(const FixedVector& other) = default;
+		~FixedVector() = default;
+		
 		bool Add(const T& t);
 		bool Remove(const T& t);
-		T Get(const unsigned int index) const;
-		T& operator[](const unsigned int index) const;
+		const T& Get(const unsigned int index) const;
+		T& operator[](const unsigned int index);
 		int GetIndex(const T& t) const;
 		size_t GetSize() const;
 		size_t GetCapacity() const;
@@ -24,7 +27,6 @@ namespace lab8
 		: mCapacity(N)
 		, mSize(0)
 	{
-
 	}
 
 	template<typename T, size_t N>
@@ -45,17 +47,19 @@ namespace lab8
 	{
 		T* p = mElements;
 		
-		while (p - mElements < mSize)
+		while (static_cast<unsigned int>(p - mElements) < mSize)
 		{
 			if (*p == t)
 			{
-				while (p - mElements < mSize - 1)
+				while (static_cast<unsigned int>(p - mElements) < mSize - 1)
 				{
-					*p == *(p + 1);
+					*p = *(p + 1);
 
 					++p;
 				}
 
+				--mSize;
+				
 				return true;
 			}
 
@@ -66,17 +70,17 @@ namespace lab8
 	}
 	
 	template<typename T, size_t N>
-	T FixedVector<T, N>::Get(const unsigned int index) const
+	const T& FixedVector<T, N>::Get(const unsigned int index) const
 	{
-		static_assert(index < mSize);
+		//static_assert(index < mSize);
 
 		return mElements[index];
 	}
 
 	template<typename T, size_t N>
-	T& FixedVector<T, N>::operator[](const unsigned int index) const
+	T& FixedVector<T, N>::operator[](const unsigned int index) 
 	{
-		static_assert(index < mSize);
+		//static_assert(index < mSize);
 
 		return mElements[index];
 	}
@@ -84,9 +88,9 @@ namespace lab8
 	template<typename T, size_t N>
 	int FixedVector<T, N>::GetIndex(const T& t) const
 	{
-		T* p = mElements;
+		const T* p = mElements;
 
-		while (p - mElements < mSize)
+		while (static_cast<unsigned int>(p - mElements) < mSize)
 		{
 			if (*p == t)
 			{
