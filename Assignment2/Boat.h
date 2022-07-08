@@ -15,6 +15,11 @@ namespace assignment2
 		const static int RESTED = -1;
 
 	public:
+		Boat()
+			:Vehicle(10)
+		{
+
+		}
 		Boat(unsigned int maxPassengersCount);
 		~Boat();
 

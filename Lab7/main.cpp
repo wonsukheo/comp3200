@@ -85,31 +85,6 @@ int main()
 		assert(combinedVector[5] == 6);
 	}
 
-	std::map<char, int> combinedMap = m1 + m2;
-	{
-		std::map<char, int>::const_iterator it = combinedMap.begin();
-
-		assert(combinedMap.size() == 6);
-
-		assert(it->first == 'a');
-		assert(it->second == 1);
-		it++;
-		assert(it->first == 'b');
-		assert(it->second == 2);
-		it++;
-		assert(it->first == 'c');
-		assert(it->second == 3);
-		it++;
-		assert(it->first == 'd');
-		assert(it->second == 4);
-		it++;
-		assert(it->first == 'e');
-		assert(it->second == 5);
-		it++;
-		assert(it->first == 'f');
-		assert(it->second == 6);
-	}
-
 	std::cout << v1 << std::endl;
 	std::cout << m1 << std::endl;
 

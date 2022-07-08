@@ -44,6 +44,7 @@ namespace assignment2
 	{	
 		for (int i = 0; i < static_cast<int>(mPassengersCount); ++i)
 		{
+
 			delete mPassengers[i];
 		}
 

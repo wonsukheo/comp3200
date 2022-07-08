@@ -35,7 +35,7 @@ int main()
 	b.AddPassenger(p5);
 	b.AddPassenger(p6);
 
-	Boatplane bp = b + a; // Boat + Airplane인 것에 유의
+	Boatplane bp = a + b; // Boat + Airplane인 것에 유의
 	unsigned int result = bp.GetPassengersCount() ; // 6 반환
 	assert(result == 6);
 

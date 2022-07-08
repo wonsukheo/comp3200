@@ -4,6 +4,8 @@
 #include "IDrivable.h"
 #include "Trailer.h"
 
+
+
 namespace assignment2
 {
 	class Trailer;

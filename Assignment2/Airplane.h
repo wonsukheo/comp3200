@@ -4,6 +4,7 @@
 #include "Boatplane.h"
 #include "IDrivable.h"
 #include "IFlyable.h"
+#include "Boat.h"
 
 namespace assignment2
 {
@@ -25,7 +26,7 @@ namespace assignment2
 		unsigned int GetFlySpeed() const;
 		unsigned int GetDriveSpeed() const;
 
-		Boatplane operator+(Boat& boat);	
+		Boatplane& operator+(Boat& boat);	
 	
 		void Travel();
 	};
