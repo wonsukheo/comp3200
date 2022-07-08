@@ -86,7 +86,7 @@ namespace lab8
 
 			if (firstElement == true)
 			{
-				mData[i] += pow(2, (LEN * (i + 1) - 1));
+				mData[i] |= (1 << (LEN * (i + 1) - 1));
 			}
 			else
 			{
