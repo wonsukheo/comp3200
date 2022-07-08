@@ -54,42 +54,49 @@ namespace lab8
 	bool FixedVector<bool, N>::Remove(const bool element)
 	{
 		int index = GetIndex(element);
+		size_t i = index / 32;
 
 		if (index == -1)
 		{
 			return false;
 		}
 
-		mData[index / LEN] >>= 1;
-
-		if (index % 32 == 0)
+		if (index % LEN == 0)
 		{
+			mData[i] = mData[i] >> 1;
 			goto push;
-		}
-
-		if (element == false)
-		{
-			mData[index / LEN] += static_cast<uint32_t>(pow(2, index - 1));
 		}
 		else
 		{
-			mData[index / LEN] -= static_cast<uint32_t>(pow(2, index - 1));
+			if (element == true)
+			{
+				mData[i] = mData[i] & ~(1 << index);
+			}
+			else
+			{
+				mData[i] = mData[i] | (1 << index);
+			}
 		}
 
-		//push from next mData[next index]
-	push:
-		size_t i = index / LEN;
+		mData[i] = mData[i] >> 1;
 
-		while (i < (mSize - 1) / LEN)
+	push:
+		while (i < (mSize / LEN))
 		{
-			bool firstElement = Get((i + 1) * 32);
+			bool firstElement = Get(32 * (i + 1));
 
 			if (firstElement == true)
 			{
-				mData[i] += static_cast<uint32_t>(pow(2, LEN - 1));
+				mData[i] = mData[i] | (1 << 32 * (i + 1) - 1);
+			}
+			else
+			{
+				mData[i] = mData[i] & ~(1 << 32 * (i + 1) - 1);
 			}
 
-			mData[++i] >>= 1;
+			mData[i + 1] >>= 1;
+
+			++i;
 		}
 
 		--mSize;
@@ -127,7 +134,7 @@ namespace lab8
 				return index;
 			}
 
-			temp >>= 1;
+			temp = temp >> 1;
 
 			++index;
 
