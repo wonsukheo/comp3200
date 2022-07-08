@@ -54,49 +54,46 @@ namespace lab8
 	bool FixedVector<bool, N>::Remove(const bool element)
 	{
 		int index = GetIndex(element);
-		size_t i = index / 32;
+		int i = index / 32;
 
 		if (index == -1)
 		{
 			return false;
 		}
 
+		mData[i] >>= 1;
+
 		if (index % LEN == 0)
 		{
-			mData[i] = mData[i] >> 1;
 			goto push;
 		}
 		else
 		{
 			if (element == true)
 			{
-				mData[i] = mData[i] & ~(1 << index);
+				mData[i] &= ~(1 << (index - 1));
 			}
 			else
 			{
-				mData[i] = mData[i] | (1 << index);
+				mData[i] |= (1 << (index - 1));
 			}
 		}
 
-		mData[i] = mData[i] >> 1;
-
 	push:
-		while (i < (mSize / LEN))
+		while (i < (mSize - 1) / LEN)
 		{
-			bool firstElement = Get(32 * (i + 1));
+			bool firstElement = Get(LEN * (i + 1));
 
 			if (firstElement == true)
 			{
-				mData[i] = mData[i] | (1 << 32 * (i + 1) - 1);
+				mData[i] |= (1 << (32 * (i + 1) - 1));
 			}
 			else
 			{
-				mData[i] = mData[i] & ~(1 << 32 * (i + 1) - 1);
+				mData[i] &= ~(1 << (32 * (i + 1) - 1));
 			}
 
-			mData[i + 1] >>= 1;
-
-			++i;
+			mData[++i] >>= 1;
 		}
 
 		--mSize;
