@@ -53,7 +53,7 @@ namespace assignment2
 		}
 	}
 
-	Boatplane Airplane::operator+(Boat& boat)
+	Boatplane& Airplane::operator+(Boat& boat)
 	{
 		Boatplane result(mMaxPassengersCount + boat.mMaxPassengersCount);
 		
