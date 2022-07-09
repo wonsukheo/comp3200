@@ -8,11 +8,9 @@ namespace assignment3
 	template<typename T>
 	class SmartStack
 	{
-		static const uint32_t INIT_CAPACITY = 16;
-
 	public:
 		SmartStack();
-		SmartStack(const T& other) = default;
+		SmartStack(const SmartStack& other) = default;
 		~SmartStack() = default;
 
 		void Push(T number);
@@ -20,71 +18,83 @@ namespace assignment3
 		T Peek();
 		T GetMax();
 		T GetMin();
+		double GetAverage();
+		T GetSum();
+		double GetVariance();
+		double GetStandardDeviation();
+		unsigned int GetCount();
 
 	private:		
-		std::stack<T> mElements;
-		std::stack<T> mMax;
-		std::stack<T> mMin;
-
-		uint32_t mSize;
+		std::stack<T> mNumStack;
+		std::stack<T> mMaxStack;
+		std::stack<T> mMinStack;
+		double mSum;
+		double mSumSquared;
+		uint32_t mCount;
 	};
 
 	template<typename T>
 	SmartStack<T>::SmartStack()
-		: mSize(0)
+		: mCount(0)
+		, mSum(0)
+		, mSumSquared(0)
 	{
 	}
 
 	template<typename T>
 	void SmartStack<T>::Push(T number)
 	{
-		mElements.push(number);
+		mNumStack.push(number);
 
-		if (mMax.empty())
+		if (mMaxStack.empty())
 		{
-			mMax.push(number);
+			mMaxStack.push(number);
 		}
 		else
 		{
-			if (number > mMax.top())
+			if (number > mMaxStack.top())
 			{
-				mMax.push(number);
+				mMaxStack.push(number);
 			}
 			else
 			{
-				mMax.push(mMax.top());
+				mMaxStack.push(mMaxStack.top());
 			}
 		}
 
-		if (mMin.empty())
+		if (mMinStack.empty())
 		{
-			mMin.push(number);
+			mMinStack.push(number);
 		}
 		else
 		{
-			if (number < mMin.top())
+			if (number < mMinStack.top())
 			{
-				mMin.push(number);
+				mMinStack.push(number);
 			}
 			else
 			{
-				mMin.push(mMin.top());
+				mMinStack.push(mMinStack.top());
 			}
 		}
 
-		++mSize;
+		mSum += number;
+		mSumSquared += number * number;
+		++mCount;
 	}
 
 	template<typename T>
 	T SmartStack<T>::Pop()
 	{
-		T val = mElements.top();
+		T val = mNumStack.top();
 
-		mElements.pop();
-		mMax.pop();
-		mMin.pop();
+		mNumStack.pop();
+		mMaxStack.pop();
+		mMinStack.pop();
 		
-		--mSize;
+		mSum -= val;
+		mSumSquared -= val * val;
+		--mCount;
 
 		return val;
 	}
@@ -92,18 +102,48 @@ namespace assignment3
 	template<typename T>
 	T SmartStack<T>::Peek()
 	{
-		return mElements.top();
+		return mNumStack.top();
 	}
 
 	template<typename T>
 	T SmartStack<T>::GetMax()
 	{
-		return mSize == 0 ? std::numeric_limits<T>::max() : mMax.top();
+		return mCount == 0 ? std::numeric_limits<T>::max() : mMaxStack.top();
 	}
 
 	template<typename T>
 	T SmartStack<T>::GetMin()
 	{
-		return mSize == 0 ? std::numeric_limits<T>::min() : mMin.top();
+		return mCount == 0 ? std::numeric_limits<T>::min() : mMinStack.top();
+	}
+	
+	template<typename T>
+	double SmartStack<T>::GetAverage()
+	{
+		return mSum / mCount;
+	}
+
+	template<typename T>
+	T SmartStack<T>::GetSum()
+	{
+		return static_cast<T>(mSum);
+	}
+
+	template<typename T>
+	double SmartStack<T>::GetVariance()
+	{
+		return mSumSquared / mCount - (mSum / mCount * mSum / mCount);
+	}
+
+	template<typename T>
+	double SmartStack<T>::GetStandardDeviation()
+	{
+		return sqrt(mSumSquared / mCount - (mSum / mCount * mSum / mCount));
+	}
+
+	template<typename T>
+	unsigned int SmartStack<T>::GetCount()
+	{
+		return mCount;
 	}
 }
