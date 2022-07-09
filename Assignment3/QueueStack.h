@@ -10,14 +10,19 @@ namespace assignment3
 	{
 	public:
 		QueueStack(unsigned int maxStackSize);
-		QueueStack(const QueueStack& other) = default;
-		~QueueStack() = default;
+		QueueStack(QueueStack& other);
+		~QueueStack();
 
+		QueueStack& operator=(QueueStack& other);
 		void Enqueue(T number);
 		T Peek();
 		T Dequeue();
 		T GetMax();
 		T GetMin();
+		double GetAverage();
+		T GetSum();
+		unsigned int GetCount();
+		unsigned int GetStackCount();
 
 	private:
 		unsigned int mMaxStackSize;
@@ -30,6 +35,55 @@ namespace assignment3
 		: mMaxStackSize(maxStackSize)
 		, mCount(0)
 	{
+	}
+
+	template<typename T>
+	QueueStack<T>::QueueStack(QueueStack<T>& other)
+		: mMaxStackSize(maxStackSize)
+		, mCount(0)
+	{
+		for (int i = 0; i <= mCount;)
+		{
+			std::stack<T>& firstStack = other.mStackQueue.front();
+			std::stack<T> temp = new std::stack<T>;
+			std::stack<T> temp2 = new std::stack<T>;
+
+			while (!firstStack.empty())
+			{
+				T num = firstStack.top();
+
+				firstStack.pop();
+
+				temp.push(num);
+				temp2.push(num);
+
+				++i;
+			}
+
+			other.mStackQueue.pop();
+			other.mStackQueue.push(temp2);
+
+			mStackQueue.push(temp);
+
+			delete firstStack;
+		}
+	}
+
+	template<typename T>
+	QueueStack& QueueStack<T>::operator=(QueueStack& other)
+	{
+		
+	}
+
+	template<typename T>
+	QueueStack<T>::~QueueStack()
+	{
+		while (!mStackQueue.empty())
+		{
+			delete mStackQueue.front();
+
+			mStackQueue.pop();
+		}
 	}
 
 	template<typename T>
@@ -80,24 +134,155 @@ namespace assignment3
 	T QueueStack<T>::GetMax()
 	{
 		T max = std::numeric_limits<T>::min();
-
+		
 		if (mCount == 0)
 		{
 			return max;
 		}
 
-		std::queue<T> temp = mNumberQueue;
-
-		while (!temp.empty())
+		for (int i = 0; i <= mCount;)
 		{
-			if (temp.front() > max)
+			std::stack<T>& firstStack = mStackQueue.front();
+			std::stack<T> temp = new std::stack<T>;
+
+			while (!firstStack.empty())
 			{
-				max = temp.front();
+				T num = firstStack.top();
+
+				max = num > max ? num : max;
+
+				firstStack.pop();
+
+				temp.push(num);
+
+				++i;
 			}
 
-			temp.pop();
+			mStackQueue.pop();
+			mStackQueue.push(temp);
+
+			delete firstStack;
 		}
 
 		return max;
+	}
+
+	template<typename T>
+	T QueueStack<T>::GetMin()
+	{
+		T min = std::numeric_limits<T>::max();
+
+		if (mCount == 0)
+		{
+			return min;
+		}
+
+		for (int i = 0; i <= mCount;)
+		{
+			std::stack<T>& firstStack = mStackQueue.front();
+			std::stack<T> temp = new std::stack<T>;
+
+			while (!firstStack.empty())
+			{
+				T num = firstStack.top();
+
+				min = num < min ? num : min;
+
+				firstStack.pop();
+
+				temp.push(num);
+
+				++i;
+			}
+
+			mStackQueue.pop();
+			mStackQueue.push(temp);
+
+			delete firstStack;
+		}
+
+		return min;
+	}
+
+	template<typename T>
+	double QueueStack<T>::GetAverage()
+	{
+		double sum = 0;
+
+		if (mCount == 0)
+		{
+			return sum;
+		}
+
+		for (int i = 0; i <= mCount;)
+		{
+			std::stack<T>& firstStack = mStackQueue.front();
+			std::stack<T> temp = new std::stack<T>;
+
+			while (!firstStack.empty())
+			{
+				sum += firstStack.top();
+
+				firstStack.pop();
+
+				temp.push(num);
+
+				++i;
+			}
+
+			mStackQueue.pop();
+			mStackQueue.push(temp);
+
+			delete firstStack;
+		}
+
+		return sum / mCount;
+	}
+
+	template<typename T>
+	T QueueStack<T>::GetSum()
+	{
+		double sum = 0;
+
+		if (mCount == 0)
+		{
+			return static_cast<T>(sum);
+		}
+
+		for (int i = 0; i <= mCount;)
+		{
+			std::stack<T>& firstStack = mStackQueue.front();
+			std::stack<T> temp = new std::stack<T>;
+
+			while (!firstStack.empty())
+			{
+				sum += firstStack.top();
+
+				firstStack.pop();
+
+				temp.push(num);
+
+				++i;
+			}
+
+			mStackQueue.pop();
+			mStackQueue.push(temp);
+
+			delete firstStack;
+		}
+
+		return static_cast<T>(sum);
+	}
+
+	template<typename T>
+	unsigned int QueueStack<T>::GetCount()
+	{
+		return mCount;
+	}
+
+	template<typename T>
+	unsigned int QueueStack<T>::GetStackCount()
+	{
+		return mStackQueue.size();
 	}
 }
