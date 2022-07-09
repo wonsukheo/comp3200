@@ -20,6 +20,10 @@ namespace assignment3
 		T Peek();
 		T GetMax();
 		T GetMin();
+		T GetSum();
+		double GetSumDouble();
+		double GetAverage();
+		double GetVariance();
 
 	private:		
 		std::stack<T> mElements;
@@ -105,5 +109,47 @@ namespace assignment3
 	T SmartStack<T>::GetMin()
 	{
 		return mSize == 0 ? std::numeric_limits<T>::min() : mMin.top();
+	}
+
+	template<typename T>
+	double SmartStack<T>::GetAverage()
+	{
+		return GetSumDouble() / mSize;
+	}
+
+	template<typename T>
+	T SmartStack<T>::GetSum()
+	{
+		return static_cast<T>(GetSumDouble());
+	}
+
+	template<typename T>
+	double SmartStack<T>::GetSumDouble()
+	{
+		double sum = 0;
+		std::stack<T> temp;
+
+		for (int i = 0; i < mSize; ++i)
+		{
+			sum += mElements.top();
+			temp.push(mElements.top());
+
+			mElements.pop();
+		}
+
+		for (int i = 0; i < mSize; ++i)
+		{
+			mElements.push(temp.top());
+
+			temp.pop();
+		}
+
+		return sum;
+	}
+
+	template<typename T>
+	double SmartStack<T>::GetVariance()
+	{
+
 	}
 }
