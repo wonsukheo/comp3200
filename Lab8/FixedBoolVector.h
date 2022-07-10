@@ -19,7 +19,6 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
-		
 		enum { LEN = 32 };
 		uint32_t mData[(N + LEN - 1) / LEN];
 		size_t mSize;
