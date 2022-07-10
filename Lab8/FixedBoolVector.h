@@ -28,9 +28,9 @@ namespace lab8
 	FixedVector<bool, N>::FixedVector()
 		: mSize(0)
 	{
-		int iter = N / LEN == 0 ? 1 : N / LEN;
+		//int iter = N / LEN == 0 ? 1 : N / LEN;
 
-		for (int i = 0; i < iter; ++i)
+		for (int i = 0; i < N / LEN + 1; ++i)
 		{
 			mData[i] = 0;
 		}
