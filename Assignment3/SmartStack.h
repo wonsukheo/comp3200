@@ -15,14 +15,14 @@ namespace assignment3
 
 		void Push(T number);
 		T Pop();
-		T Peek();
-		T GetMax();
-		T GetMin();
-		double GetAverage();
-		T GetSum();
-		double GetVariance();
-		double GetStandardDeviation();
-		unsigned int GetCount();
+		T Peek() const;
+		T GetMax() const;
+		T GetMin() const;
+		double GetAverage() const;
+		T GetSum() const;
+		double GetVariance() const;
+		double GetStandardDeviation() const;
+		unsigned int GetCount() const;
 
 	private:		
 		std::stack<T> mNumStack;
@@ -40,18 +40,7 @@ namespace assignment3
 		, mSumSquared(0)
 	{
 	}
-	/*
-	template<typename T>
-	SmartStack<T>::SmartStack(const SmartStack& other)
-		: mCount(other.mCount)
-		, mSum(other.mSum)
-		, mSumSquared(other.mSumSquared)
-	{
-		mNumStack = other.mNumStack;
-		mMinStack = other.mMinStack;
-		mMaxStack = other.mMaxStack;
-	}
-	*/
+
 	template<typename T>
 	void SmartStack<T>::Push(T number)
 	{
@@ -111,49 +100,49 @@ namespace assignment3
 	}
 
 	template<typename T>
-	T SmartStack<T>::Peek()
+	T SmartStack<T>::Peek() const
 	{
 		return mNumStack.top();
 	}
 
 	template<typename T>
-	T SmartStack<T>::GetMax()
+	T SmartStack<T>::GetMax() const
 	{
 		return mCount == 0 ? std::numeric_limits<T>::lowest() : mMaxStack.top();
 	}
 
 	template<typename T>
-	T SmartStack<T>::GetMin()
+	T SmartStack<T>::GetMin() const
 	{
 		return mCount == 0 ? std::numeric_limits<T>::max() : mMinStack.top();
 	}
 	
 	template<typename T>
-	double SmartStack<T>::GetAverage()
+	double SmartStack<T>::GetAverage() const
 	{
 		return mSum / mCount;
 	}
 
 	template<typename T>
-	T SmartStack<T>::GetSum()
+	T SmartStack<T>::GetSum() const
 	{
 		return static_cast<T>(mSum);
 	}
 
 	template<typename T>
-	double SmartStack<T>::GetVariance()
+	double SmartStack<T>::GetVariance() const
 	{
 		return mSumSquared / mCount - (mSum / mCount * mSum / mCount);
 	}
 
 	template<typename T>
-	double SmartStack<T>::GetStandardDeviation()
+	double SmartStack<T>::GetStandardDeviation() const
 	{
 		return sqrt(mSumSquared / mCount - (mSum / mCount * mSum / mCount));
 	}
 
 	template<typename T>
-	unsigned int SmartStack<T>::GetCount()
+	unsigned int SmartStack<T>::GetCount() const
 	{
 		return mCount;
 	}

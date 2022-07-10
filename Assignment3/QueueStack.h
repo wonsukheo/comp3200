@@ -16,14 +16,14 @@ namespace assignment3
 		~QueueStack() = default;
 
 		void Enqueue(T number);	
-		T Peek();
+		T Peek() const;
 		T Dequeue();	
-		T GetMax();
-		T GetMin();
-		double GetAverage();
-		T GetSum();
-		unsigned int GetCount();
-		unsigned int GetStackCount();
+		T GetMax() const;
+		T GetMin() const;
+		double GetAverage() const;
+		T GetSum() const;
+		unsigned int GetCount() const;
+		unsigned int GetStackCount() const;
 		
 	private:
 		unsigned int mMaxStackSize;
@@ -66,7 +66,7 @@ namespace assignment3
 	}
 	
 	template<typename T>
-	T QueueStack<T>::Peek()
+	T QueueStack<T>::Peek() const
 	{
 		SmartStack<T>& frontStack = mStackQueue.front();
 
@@ -92,7 +92,7 @@ namespace assignment3
 
 	
 	template<typename T>
-	T QueueStack<T>::GetMax()
+	T QueueStack<T>::GetMax() const
 	{
 		T max = std::numeric_limits<T>::lowest();
 		
@@ -117,7 +117,7 @@ namespace assignment3
 	}
 	
 	template<typename T>
-	T QueueStack<T>::GetMin()
+	T QueueStack<T>::GetMin() const
 	{
 		T min = std::numeric_limits<T>::max();
 
@@ -142,7 +142,7 @@ namespace assignment3
 	}
 	
 	template<typename T>
-	double QueueStack<T>::GetAverage()
+	double QueueStack<T>::GetAverage() const
 	{
 		double sum = 0;
 
@@ -166,7 +166,7 @@ namespace assignment3
 	}
 
 	template<typename T>
-	T QueueStack<T>::GetSum()
+	T QueueStack<T>::GetSum() const
 	{
 		double sum = 0;
 
@@ -190,7 +190,7 @@ namespace assignment3
 	}
 
 	template<typename T>
-	unsigned int QueueStack<T>::GetCount()
+	unsigned int QueueStack<T>::GetCount() const
 	{
 		unsigned int count = 0;
 
@@ -219,7 +219,7 @@ namespace assignment3
 	}
 
 	template<typename T>
-	unsigned int QueueStack<T>::GetStackCount()
+	unsigned int QueueStack<T>::GetStackCount() const
 	{
 		return mStackQueue.size();
 	}

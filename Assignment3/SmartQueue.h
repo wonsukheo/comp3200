@@ -12,15 +12,15 @@ namespace assignment3
 		~SmartQueue() = default;
 
 		void Enqueue(T number);
-		T Peek();
+		T Peek() const;
 		T Dequeue();
-		T GetMax();
-		T GetMin();
-		double GetAverage();
-		T GetSum();
-		double GetVariance();
-		double GetStandardDeviation();
-		unsigned int GetCount();
+		T GetMax() const;
+		T GetMin() const;
+		double GetAverage() const;
+		T GetSum() const;
+		double GetVariance() const;
+		double GetStandardDeviation() const;
+		unsigned int GetCount() const;
 
 	private:
 		std::queue<T> mNumberQueue;
@@ -51,7 +51,7 @@ namespace assignment3
 	}
 
 	template<typename T>
-	T SmartQueue<T>::Peek()
+	T SmartQueue<T>::Peek() const
 	{
 		return mNumberQueue.front();
 	}
@@ -71,7 +71,7 @@ namespace assignment3
 	}
 
 	template<typename T>
-	T SmartQueue<T>::GetMax()
+	T SmartQueue<T>::GetMax() const
 	{
 		T max = std::numeric_limits<T>::lowest();
 
@@ -96,7 +96,7 @@ namespace assignment3
 	}
 
 	template<typename T>
-	T SmartQueue<T>::GetMin()
+	T SmartQueue<T>::GetMin() const
 	{
 		T min = std::numeric_limits<T>::max();
 
@@ -121,31 +121,31 @@ namespace assignment3
 	}
 
 	template<typename T>
-	double SmartQueue<T>::GetAverage()
+	double SmartQueue<T>::GetAverage() const
 	{
 		return mSum / mCount;
 	}
 
 	template<typename T>
-	T SmartQueue<T>::GetSum()
+	T SmartQueue<T>::GetSum() const
 	{
 		return static_cast<T>(mSum);
 	}
 
 	template<typename T>
-	double SmartQueue<T>::GetVariance()
+	double SmartQueue<T>::GetVariance() const
 	{
 		return mSumSquared / mCount - (mSum / mCount * mSum / mCount);
 	}
 
 	template<typename T>
-	double SmartQueue<T>::GetStandardDeviation()
+	double SmartQueue<T>::GetStandardDeviation() const
 	{
 		return sqrt(mSumSquared / mCount - (mSum / mCount * mSum / mCount));
 	}
 
 	template<typename T>
-	unsigned int SmartQueue<T>::GetCount()
+	unsigned int SmartQueue<T>::GetCount() const
 	{
 		return mCount;
 	}
