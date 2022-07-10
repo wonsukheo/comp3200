@@ -10,7 +10,7 @@ namespace lab8
 		
 		bool Add(const T& t);
 		bool Remove(const T& t);
-		T Get(const unsigned int index) const;
+		const T& Get(const unsigned int index) const;
 		T& operator[](const unsigned int index);
 		int GetIndex(const T& t) const;
 		size_t GetSize() const;
@@ -70,7 +70,7 @@ namespace lab8
 	}
 	
 	template<typename T, size_t N>
-	T FixedVector<T, N>::Get(const unsigned int index) const
+	const T& FixedVector<T, N>::Get(const unsigned int index) const
 	{
 		//static_assert(index < mSize);
 
@@ -78,7 +78,7 @@ namespace lab8
 	}
 
 	template<typename T, size_t N>
-	T& FixedVector<T, N>::operator[](const unsigned int index)
+	T& FixedVector<T, N>::operator[](const unsigned int index) 
 	{	
 		//static_assert(index < mSize);
 
