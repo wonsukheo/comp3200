@@ -40,7 +40,18 @@ namespace assignment3
 		, mSumSquared(0)
 	{
 	}
-
+	/*
+	template<typename T>
+	SmartStack<T>::SmartStack(const SmartStack& other)
+		: mCount(other.mCount)
+		, mSum(other.mSum)
+		, mSumSquared(other.mSumSquared)
+	{
+		mNumStack = other.mNumStack;
+		mMinStack = other.mMinStack;
+		mMaxStack = other.mMaxStack;
+	}
+	*/
 	template<typename T>
 	void SmartStack<T>::Push(T number)
 	{
@@ -78,7 +89,7 @@ namespace assignment3
 			}
 		}
 
-		mSum += number;
+		mSum += static_cast<double>(number);
 		mSumSquared += number * number;
 		++mCount;
 	}
@@ -108,13 +119,13 @@ namespace assignment3
 	template<typename T>
 	T SmartStack<T>::GetMax()
 	{
-		return mCount == 0 ? std::numeric_limits<T>::max() : mMaxStack.top();
+		return mCount == 0 ? std::numeric_limits<T>::lowest() : mMaxStack.top();
 	}
 
 	template<typename T>
 	T SmartStack<T>::GetMin()
 	{
-		return mCount == 0 ? std::numeric_limits<T>::min() : mMinStack.top();
+		return mCount == 0 ? std::numeric_limits<T>::max() : mMinStack.top();
 	}
 	
 	template<typename T>

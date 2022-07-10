@@ -68,6 +68,10 @@ namespace myString
 
 		memcpy(mC_str + mSize, other.mC_str, other.mSize + 1);
 
+		mSize += other.mSize;
+
+		
+
 		return *this;
 	}
 
