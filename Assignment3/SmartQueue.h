@@ -47,7 +47,7 @@ namespace assignment3
 		mSumSquared += number * number;
 		++mCount;
 
-		return void;
+		return;
 	}
 
 	template<typename T>
@@ -73,7 +73,7 @@ namespace assignment3
 	template<typename T>
 	T SmartQueue<T>::GetMax()
 	{
-		T max = std::numeric_limits<T>::min();
+		T max = std::numeric_limits<T>::lowest();
 
 		if (mCount == 0)
 		{

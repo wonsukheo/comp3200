@@ -3,6 +3,8 @@
 #include <queue>
 #include <stack>
 
+#include "SmartStack.h"
+
 namespace assignment3
 {
 	template<typename T>
@@ -10,233 +12,157 @@ namespace assignment3
 	{
 	public:
 		QueueStack(unsigned int maxStackSize);
-		QueueStack(QueueStack& other);
-		~QueueStack();
+		QueueStack(QueueStack<T>& other) = default;
+		~QueueStack() = default;
 
-		QueueStack& operator=(QueueStack& other);
-		void Enqueue(T number);
+		void Enqueue(T number);	
 		T Peek();
-		T Dequeue();
+		T Dequeue();	
 		T GetMax();
 		T GetMin();
 		double GetAverage();
 		T GetSum();
 		unsigned int GetCount();
 		unsigned int GetStackCount();
-
+		
 	private:
 		unsigned int mMaxStackSize;
-		std::queue<std::stack<T>> mStackQueue;
-		uint32_t mCount;
+		std::queue<SmartStack<T>> mStackQueue;
 	};
 
 	template<typename T>
 	QueueStack<T>::QueueStack(unsigned int maxStackSize)
 		: mMaxStackSize(maxStackSize)
-		, mCount(0)
 	{
-	}
-
-	template<typename T>
-	QueueStack<T>::QueueStack(QueueStack<T>& other)
-		: mMaxStackSize(maxStackSize)
-		, mCount(0)
-	{
-		for (int i = 0; i <= mCount;)
-		{
-			std::stack<T>& firstStack = other.mStackQueue.front();
-			std::stack<T> temp = new std::stack<T>;
-			std::stack<T> temp2 = new std::stack<T>;
-
-			while (!firstStack.empty())
-			{
-				T num = firstStack.top();
-
-				firstStack.pop();
-
-				temp.push(num);
-				temp2.push(num);
-
-				++i;
-			}
-
-			other.mStackQueue.pop();
-			other.mStackQueue.push(temp2);
-
-			mStackQueue.push(temp);
-
-			delete firstStack;
-		}
-	}
-
-	template<typename T>
-	QueueStack& QueueStack<T>::operator=(QueueStack& other)
-	{
-		
-	}
-
-	template<typename T>
-	QueueStack<T>::~QueueStack()
-	{
-		while (!mStackQueue.empty())
-		{
-			delete mStackQueue.front();
-
-			mStackQueue.pop();
-		}
 	}
 
 	template<typename T>
 	void QueueStack<T>::Enqueue(T number)
 	{
+		if (mMaxStackSize == 0)
+		{
+			return;
+		}
+
 		if (mStackQueue.empty())
 		{
-			mStackQueue.push(new std::stack<T>);
+			mStackQueue.push(SmartStack<T>());
 		}
 
-		std::stack<T>& currentStack = mStackQueue.back();
+		SmartStack<T>& currentStack = mStackQueue.back();
 		
-		if (currentStack.size() == mMaxStackSize)
+		if (currentStack.GetCount() == mMaxStackSize)
 		{
-			mStackQueue.push(new std::stack<T>);
+			mStackQueue.push(SmartStack<T>());
 
-			currentStack = mStackQueue.back();
+			mStackQueue.back().Push(number);
+
+			return;
 		}
 
-		currentStack.push(number);
-		++mCount;
+		currentStack.Push(number);
 
-		return void;
+		return;
 	}
-
+	
 	template<typename T>
 	T QueueStack<T>::Peek()
 	{
-		std::stack<T>& frontStack = mStackQueue.front();
+		SmartStack<T>& frontStack = mStackQueue.front();
 
-		return frontStack.top();
+		return frontStack.Peek();
 	}
-
+	
 	template<typename T>
 	T QueueStack<T>::Dequeue()
 	{
-		std::stack<T>& frontStack = mStackQueue.front();
+		SmartStack<T>& frontStack = mStackQueue.front();
 
-		T ret = frontStack.top();
+		T ret = frontStack.Peek();
 
-		frontStack.pop();
-		--mCount;
+		frontStack.Pop();
+
+		if (frontStack.GetCount() == 0)
+		{
+			mStackQueue.pop();
+		}
 
 		return ret;
 	}
 
+	
 	template<typename T>
 	T QueueStack<T>::GetMax()
 	{
-		T max = std::numeric_limits<T>::min();
+		T max = std::numeric_limits<T>::lowest();
 		
-		if (mCount == 0)
+		if (mStackQueue.empty())
 		{
 			return max;
 		}
 
-		for (int i = 0; i <= mCount;)
+		for (unsigned int i = 0; i < mStackQueue.size(); ++i)
 		{
-			std::stack<T>& firstStack = mStackQueue.front();
-			std::stack<T> temp = new std::stack<T>;
+			SmartStack<T> firstStack(mStackQueue.front());
 
-			while (!firstStack.empty())
-			{
-				T num = firstStack.top();
-
-				max = num > max ? num : max;
-
-				firstStack.pop();
-
-				temp.push(num);
-
-				++i;
-			}
+			T data = firstStack.GetMax();
+			max = data > max ? data : max;
 
 			mStackQueue.pop();
-			mStackQueue.push(temp);
 
-			delete firstStack;
+			mStackQueue.push(firstStack);
 		}
 
 		return max;
 	}
-
+	
 	template<typename T>
 	T QueueStack<T>::GetMin()
 	{
 		T min = std::numeric_limits<T>::max();
 
-		if (mCount == 0)
+		if (mStackQueue.empty())
 		{
 			return min;
 		}
 
-		for (int i = 0; i <= mCount;)
+		for (unsigned int i = 0; i < mStackQueue.size(); ++i)
 		{
-			std::stack<T>& firstStack = mStackQueue.front();
-			std::stack<T> temp = new std::stack<T>;
+			SmartStack<T> firstStack = mStackQueue.front();
 
-			while (!firstStack.empty())
-			{
-				T num = firstStack.top();
-
-				min = num < min ? num : min;
-
-				firstStack.pop();
-
-				temp.push(num);
-
-				++i;
-			}
+			T data = firstStack.GetMin();
+			min = data < min ? data : min;
 
 			mStackQueue.pop();
-			mStackQueue.push(temp);
 
-			delete firstStack;
+			mStackQueue.push(firstStack);
 		}
 
 		return min;
 	}
-
+	
 	template<typename T>
 	double QueueStack<T>::GetAverage()
 	{
 		double sum = 0;
 
-		if (mCount == 0)
+		if (mStackQueue.empty())
 		{
-			return sum;
+			return 0;
 		}
 
-		for (int i = 0; i <= mCount;)
+		for (unsigned int i = 0; i < mStackQueue.size(); ++i)
 		{
-			std::stack<T>& firstStack = mStackQueue.front();
-			std::stack<T> temp = new std::stack<T>;
+			SmartStack<T> firstStack = mStackQueue.front();
 
-			while (!firstStack.empty())
-			{
-				sum += firstStack.top();
-
-				firstStack.pop();
-
-				temp.push(num);
-
-				++i;
-			}
+			sum += static_cast<double>(firstStack.GetSum());
 
 			mStackQueue.pop();
-			mStackQueue.push(temp);
 
-			delete firstStack;
+			mStackQueue.push(firstStack);
 		}
 
-		return sum / mCount;
+		return sum / GetCount();
 	}
 
 	template<typename T>
@@ -244,31 +170,20 @@ namespace assignment3
 	{
 		double sum = 0;
 
-		if (mCount == 0)
+		if (mStackQueue.empty())
 		{
-			return static_cast<T>(sum);
+			return 0;
 		}
 
-		for (int i = 0; i <= mCount;)
+		for (unsigned int i = 0; i < mStackQueue.size(); ++i)
 		{
-			std::stack<T>& firstStack = mStackQueue.front();
-			std::stack<T> temp = new std::stack<T>;
+			SmartStack<T> firstStack = mStackQueue.front();
 
-			while (!firstStack.empty())
-			{
-				sum += firstStack.top();
-
-				firstStack.pop();
-
-				temp.push(num);
-
-				++i;
-			}
+			sum += static_cast<double>(firstStack.GetSum());
 
 			mStackQueue.pop();
-			mStackQueue.push(temp);
 
-			delete firstStack;
+			mStackQueue.push(firstStack);
 		}
 
 		return static_cast<T>(sum);
@@ -277,7 +192,30 @@ namespace assignment3
 	template<typename T>
 	unsigned int QueueStack<T>::GetCount()
 	{
-		return mCount;
+		unsigned int count = 0;
+
+		if (mStackQueue.empty())
+		{
+			return 0;
+		}
+
+		SmartStack<T> stack = mStackQueue.front();
+		
+		count += stack.GetCount();
+
+		if (mStackQueue.size() > 1)
+		{
+			stack = mStackQueue.back();
+
+			count += stack.GetCount();
+		}
+
+		if (mStackQueue.size() > 2)
+		{
+			count += mMaxStackSize * (mStackQueue.size() - 2);
+		}
+
+		return count;
 	}
 
 	template<typename T>
