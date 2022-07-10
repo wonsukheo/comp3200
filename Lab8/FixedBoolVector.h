@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 namespace lab8
 {
 	template<size_t N>
@@ -30,9 +28,9 @@ namespace lab8
 	FixedVector<bool, N>::FixedVector()
 		: mSize(0)
 	{
-		int iter = N / LEN == 0 ? 1 : N / LEN;
+		//int iter = N / LEN == 0 ? 1 : N / LEN;
 
-		for (int i = 0; i < iter; ++i)
+		for (int i = 0; i < N / LEN + 1; ++i)
 		{
 			mData[i] = 0;
 		}
@@ -126,7 +124,7 @@ namespace lab8
 		uint32_t temp = mData[index];
 
 		while (index < mSize)
-		{			
+		{
 			if (static_cast<bool>(temp & 1) == element)
 			{
 				return index;
