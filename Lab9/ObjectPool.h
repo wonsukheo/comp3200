@@ -1,16 +1,15 @@
 #pragma once
 
 #include <vector>
-#include <memory>
 
 namespace lab9
 {
 	template<typename T>
-	class ObjectPool
+	class ObjectPool final
 	{
 	public:
 		ObjectPool(size_t maxPoolSize);
-		~ObjectPool() = default;
+		~ObjectPool();
 		ObjectPool(const T& other) = delete;
 		ObjectPool& operator=(const T& other) = delete;
 
@@ -18,15 +17,26 @@ namespace lab9
 		void Return(T* ptr);
 		size_t GetFreeObjectCount();
 		size_t GetMaxFreeObjectCount();
+
 	private:
 		size_t mMaxPoolSize;
-		std::vector<std::unique_ptr<T>> mObjects;
+		std::vector<T*> mObjects;
 	};
 
 	template<typename T>
 	ObjectPool<T>::ObjectPool(size_t maxPoolSize)
 		: mMaxPoolSize(maxPoolSize)
 	{
+		mObjects.reserve(maxPoolSize);
+	}
+
+	template<typename T>
+	ObjectPool<T>::~ObjectPool()
+	{
+		for (auto it = mObjects.begin(); it != mObjects.end(); ++it)
+		{
+			delete *it;
+		}
 	}
 
 	template<typename T>
@@ -37,13 +47,11 @@ namespace lab9
 			return new T();
 		}
 
-		auto it = mObjects.begin();
-
-		T* retPtr = it->release();
+		T* ret = mObjects[0];
 
 		mObjects.erase(mObjects.begin());
 
-		return retPtr;
+		return ret;
 	}
 
 	template<typename T>
@@ -53,8 +61,11 @@ namespace lab9
 		{
 			delete ptr;
 		}
-
-		mObjects.push_back(std::unique_ptr<T>(ptr));
+		else
+		{
+			mObjects.push_back(ptr);
+		}
+		
 	}
 
 	template<typename T>
