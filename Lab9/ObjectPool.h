@@ -5,21 +5,21 @@
 namespace lab9
 {
 	template<typename T>
-	class ObjectPool 
+	class ObjectPool
 	{
 	public:
 		ObjectPool(size_t maxPoolSize);
+		ObjectPool(const ObjectPool<T>& other) = delete;
 		virtual ~ObjectPool();
-		ObjectPool(const T& other) = delete;
-		ObjectPool& operator=(const T& other) = delete;
+		ObjectPool& operator=(const ObjectPool<T>& other) = delete;
 
 		T* Get();
-		void Return(T* ptr);
+		void Return(T* object);
 		size_t GetFreeObjectCount() const;
 		size_t GetMaxFreeObjectCount() const;
 
 	private:
-		const size_t mMaxPoolSize;
+		size_t mMaxPoolSize;
 		std::queue<T*> mObjects;
 	};
 
@@ -58,17 +58,16 @@ namespace lab9
 	}
 
 	template<typename T>
-	void ObjectPool<T>::Return(T* ptr)
+	void ObjectPool<T>::Return(T* object)
 	{
 		if (mObjects.size() == mMaxPoolSize)
 		{
-			delete ptr;
+			delete object;
 		}
 		else
 		{
-			mObjects.push(ptr);
+			mObjects.push(object);
 		}
-		
 	}
 
 	template<typename T>
