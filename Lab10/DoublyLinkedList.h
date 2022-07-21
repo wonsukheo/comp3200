@@ -179,9 +179,9 @@ namespace lab10
 	template<typename T>
 	std::shared_ptr<Node<T>> DoublyLinkedList<T>::operator[](unsigned int index) const
 	{
-		if (index >= mLength)
+		if (index >= mLength || mLength == 0)
 		{
-			return nullptr;
+			return std::shared_ptr<Node<T>>(nullptr);
 		}
 
 		Node<T>* lastNodeRawPtr = mRoot.get();
