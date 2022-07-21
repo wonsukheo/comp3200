@@ -28,7 +28,7 @@ namespace lab10
 	Node<T>::Node(std::unique_ptr<T> data, std::shared_ptr<Node<T>> prev)
 		: Data(std::move(data))
 		, Next(nullptr)
-		, Previous(prev)
+		, Previous(std::weak_ptr<Node<T>>(prev))
 	{
 	}
 }
