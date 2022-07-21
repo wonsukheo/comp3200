@@ -93,13 +93,13 @@ namespace lab10
 			std::shared_ptr<Node<T>> nextNode = lastNodeRawPtr->Next;
 			Node<T>* nextNodeRawPtr = nextNode.get();
 
-			nextNodeRawPtr->Previous = std::weak_ptr(lastNode);
+			nextNodeRawPtr->Previous = std::weak_ptr<Node<T>>(lastNode);
 
 			prevNodeRawPtr->Next = node;
 
 			nodeRawPtr->Next = lastNode;
 
-			nodeRawPtr->Previous = std::weak_ptr(prevNode);
+			nodeRawPtr->Previous = std::weak_ptr<Node<T>>(prevNode);
 
 			++mLength;
 		}
@@ -128,7 +128,7 @@ namespace lab10
 					std::shared_ptr<Node<T>> nextNode = lastNodeRawPtr->Next;
 					Node<T>* nextNodeRawPtr = nextNode.get();
 
-					nextNodeRawPtr->Previous = std::weak_ptr(prevNode);
+					nextNodeRawPtr->Previous = std::weak_ptr<Node<T>>(prevNode);
 
 					prevNodeRawPtr->Next = nextNode;
 
