@@ -64,36 +64,36 @@ namespace lab10
 		if (index >= mLength)
 		{
 			Insert(std::move(data));
+
+			return;
 		}
 
 		std::shared_ptr<Node<T>> node = std::make_shared<Node<T>>(std::move(data));
 
 		Node<T>* nodeRawPtr = node.get();
 
+		std::shared_ptr<Node<T>> lastNode = mRoot;
+
 		Node<T>* lastNodeRawPtr = mRoot.get();
 
-		std::shared_ptr<Node<T>> lastNode = lastNodeRawPtr->Next;
+		index += 1;
 
 		while (index != 0)
 		{
-			lastNodeRawPtr = lastNode.get();
 
 			lastNode = lastNodeRawPtr->Next;
 
+			lastNodeRawPtr = lastNode.get();
+
 			--index;
 		}
-
-		lastNodeRawPtr = lastNode.get();
 
 		if (!lastNodeRawPtr->Previous.expired())
 		{
 			std::shared_ptr<Node<T>> prevNode = lastNodeRawPtr->Previous.lock();
 			Node<T>* prevNodeRawPtr = prevNode.get();
 
-			std::shared_ptr<Node<T>> nextNode = lastNodeRawPtr->Next;
-			Node<T>* nextNodeRawPtr = nextNode.get();
-
-			nextNodeRawPtr->Previous = std::weak_ptr<Node<T>>(lastNode);
+			lastNodeRawPtr->Previous = std::weak_ptr<Node<T>>(node);
 
 			prevNodeRawPtr->Next = node;
 
@@ -122,6 +122,18 @@ namespace lab10
 			{
 				if (!lastNodeRawPtr->Previous.expired())
 				{
+					if (lastNodeRawPtr->Next == nullptr)
+					{
+						std::shared_ptr<Node<T>> prevNode = lastNodeRawPtr->Previous.lock();
+						Node<T>* prevNodeRawPtr = prevNode.get();
+
+						prevNodeRawPtr->Next = nullptr;
+
+						--mLength;
+
+						return true;
+					}
+
 					std::shared_ptr<Node<T>> prevNode = lastNodeRawPtr->Previous.lock();
 					Node<T>* prevNodeRawPtr = prevNode.get();
 
