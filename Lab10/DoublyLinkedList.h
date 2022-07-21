@@ -127,7 +127,7 @@ namespace lab10
 
 					prevRawPtr->Next = rawPtr->Next;
 
-					nextRawPtr->Previous = std::weak_ptr(prevNode);
+					nextRawPtr->Previous = std::weak_ptr<Node<T>>(prevNode);
 				}
 
 				--mLength;
