@@ -81,10 +81,9 @@ namespace lab10
 
 			newNodeRawPtr->Next = currentNode;
 
-			rawPtr->Previous = std::weak_ptr<Node<T>>(newNode);
+			rawPtr->Previous = newNode;
 
 			Root = newNode;
-
 
 			++mLength;
 
@@ -112,7 +111,7 @@ namespace lab10
 
 		prevNodeRawPtr->Next = newNode;
 
-		rawPtr->Previous = std::weak_ptr<Node<T>>(newNode);
+		rawPtr->Previous = newNode;
 
 		++mLength;
 	}
@@ -153,8 +152,6 @@ namespace lab10
 					Node<T>* prevRawPtr = prevNode.get();
 
 					prevRawPtr->Next = nullptr;
-
-					prevNode = nullptr; // not sure if needed
 				}
 				else
 				{
