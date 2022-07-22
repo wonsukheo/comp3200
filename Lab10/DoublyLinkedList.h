@@ -44,18 +44,18 @@ namespace lab10
 		{
 			std::shared_ptr<Node<T>> currentNode = Root;
 
-			Node<T>* rawPtr = Root.get();
+			//Node<T>* rawPtr = Root.get();
 
-			while (rawPtr->Next != nullptr)
+			while (currentNode->Next != nullptr)
 			{
-				currentNode = rawPtr->Next;
+				currentNode = currentNode->Next;
 
-				rawPtr = currentNode.get();
+				//rawPtr = currentNode.get();
 			}
 
 			std::shared_ptr<Node<T>> newNode = std::make_shared<Node<T>>(std::move(data), currentNode);
 
-			rawPtr->Next = newNode;
+			currentNode->Next = newNode;
 		}
 
 		++mLength;
@@ -71,7 +71,7 @@ namespace lab10
 
 		std::shared_ptr<Node<T>> currentNode = Root;
 
-		Node<T>* rawPtr = Root.get();
+		//Node<T>* rawPtr = Root.get();
 
 		if (index == 0)
 		{
@@ -79,9 +79,9 @@ namespace lab10
 
 			Node<T>* newNodeRawPtr = newNode.get();
 
-			newNodeRawPtr->Next = currentNode;
+			newNode->Next = currentNode;
 
-			rawPtr->Previous = newNode;
+			currentNode->Previous = newNode;
 
 			Root = newNode;
 
@@ -92,26 +92,24 @@ namespace lab10
 
 		while (index != 0)
 		{
-			currentNode = rawPtr->Next;
-
-			rawPtr = currentNode.get();
+			currentNode = currentNode->Next;
 
 			--index;
 		}
 
-		std::shared_ptr<Node<T>> prevNode = rawPtr->Previous.lock();
+		std::shared_ptr<Node<T>> prevNode = currentNode->Previous.lock();
 
 		std::shared_ptr<Node<T>> newNode = std::make_shared<Node<T>>(std::move(data), prevNode);
 
-		Node<T>* newNodeRawPtr = newNode.get();
+		//Node<T>* newNodeRawPtr = newNode.get();
 
-		newNodeRawPtr->Next = currentNode;
+		newNode->Next = currentNode;
 		
-		Node<T>* prevNodeRawPtr = prevNode.get();
+		//Node<T>* prevNodeRawPtr = prevNode.get();
 
-		prevNodeRawPtr->Next = newNode;
+		prevNode->Next = newNode;
 
-		rawPtr->Previous = newNode;
+		currentNode->Previous = newNode;
 
 		++mLength;
 	}
@@ -159,6 +157,7 @@ namespace lab10
 					Node<T>* prevRawPtr = prevNode.get();
 
 					std::shared_ptr<Node<T>> nextNode = rawPtr->Next;
+
 					Node<T>* nextRawPtr = nextNode.get();
 
 					prevRawPtr->Next = rawPtr->Next;
