@@ -19,16 +19,16 @@ namespace lab10
 	template<typename T>
 	Node<T>::Node(std::unique_ptr<T> data)
 		: Data(std::move(data))
-		, Next(nullptr)
-		, Previous(std::weak_ptr<Node<T>>())
+		, Next()
+		, Previous()
 	{
 	}
 
 	template<typename T>
 	Node<T>::Node(std::unique_ptr<T> data, std::shared_ptr<Node<T>> prev)
 		: Data(std::move(data))
-		, Next(nullptr)
-		, Previous(std::weak_ptr<Node<T>>(prev))
+		, Next()
+		, Previous()
 	{
 	}
 }
