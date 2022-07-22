@@ -22,13 +22,13 @@ namespace lab10
 		std::shared_ptr<Node<T>> operator[](unsigned int index) const;
 		unsigned int GetLength() const;
 
-		std::shared_ptr<Node<T>> mRoot;
+		std::shared_ptr<Node<T>> Root;
 		unsigned int mLength;
 	};
 
 	template<typename T>
 	DoublyLinkedList<T>::DoublyLinkedList()
-		: mRoot(nullptr)
+		: Root(nullptr)
 		, mLength(0)
 	{
 	}
@@ -38,13 +38,13 @@ namespace lab10
 	{
 		if (mLength == 0)
 		{
-			mRoot = std::make_shared<Node<T>>(std::move(data));
+			Root = std::make_shared<Node<T>>(std::move(data));
 		}
 		else
 		{
-			std::shared_ptr<Node<T>> currentNode = mRoot;
+			std::shared_ptr<Node<T>> currentNode = Root;
 
-			Node<T>* rawPtr = mRoot.get();
+			Node<T>* rawPtr = Root.get();
 
 			while (rawPtr->Next != nullptr)
 			{
@@ -69,9 +69,9 @@ namespace lab10
 			return Insert(std::move(data));
 		}
 
-		std::shared_ptr<Node<T>> currentNode = mRoot;
+		std::shared_ptr<Node<T>> currentNode = Root;
 
-		Node<T>* rawPtr = mRoot.get();
+		Node<T>* rawPtr = Root.get();
 
 		if (index == 0)
 		{
@@ -83,7 +83,7 @@ namespace lab10
 
 			rawPtr->Previous = std::weak_ptr<Node<T>>(newNode);
 
-			mRoot = newNode;
+			Root = newNode;
 
 
 			++mLength;
@@ -120,7 +120,7 @@ namespace lab10
 	template<typename T>
 	bool DoublyLinkedList<T>::Delete(const T& data)
 	{
-		std::shared_ptr<Node<T>> currentNode = mRoot;
+		std::shared_ptr<Node<T>> currentNode = Root;
 
 		auto index = mLength;
 
@@ -134,7 +134,7 @@ namespace lab10
 				{
 					if (rawPtr->Next == nullptr)
 					{
-						mRoot = nullptr;
+						Root = nullptr;
 					}
 					else
 					{
@@ -144,7 +144,7 @@ namespace lab10
 
 						rawPtr->Previous = std::weak_ptr<Node<T>>();
 
-						mRoot = nextNode;
+						Root = nextNode;
 					}
 				}
 				else if (index == 1)
@@ -184,7 +184,7 @@ namespace lab10
 	template<typename T>
 	bool DoublyLinkedList<T>::Search(const T& data) const
 	{
-		std::shared_ptr<Node<T>> currentNode = mRoot;
+		std::shared_ptr<Node<T>> currentNode = Root;
 
 		Node<T>* rawPtr;
 
@@ -215,9 +215,9 @@ namespace lab10
 			return nullptr;
 		}
 
-		std::shared_ptr<Node<T>> currentNode = mRoot;
+		std::shared_ptr<Node<T>> currentNode = Root;
 
-		Node<T>* rawPtr = mRoot.get();
+		Node<T>* rawPtr = Root.get();
 		
 		while (index != 0)
 		{
