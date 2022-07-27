@@ -42,7 +42,7 @@ namespace lab11
 	{
 		auto p = mArray.get();
 
-		for (int i = 0; i < mSize; ++i)
+		for (unsigned int i = 0; i < mSize; ++i)
 		{
 			*p++ = initialValue;
 		}
@@ -53,7 +53,7 @@ namespace lab11
 		: mSize(other.mSize)
 		, mArray(std::make_unique<T[]>(mSize))
 	{
-		for (int i = 0; i < mSize; ++i)
+		for (unsigned int i = 0; i < mSize; ++i)
 		{
 			mArray[i] = other.mArray[i];
 		}
@@ -82,7 +82,7 @@ namespace lab11
 			mArray = std::make_unique<T[]>(mSize);
 		}
 
-		for (int i = 0; i < mSize; ++i)
+		for (unsigned int i = 0; i < mSize; ++i)
 		{
 			mArray[i] = other.mArray[i];
 		}
@@ -98,7 +98,7 @@ namespace lab11
 
 		mSize = other.mSize;
 
-		mArray = other.GetData();
+		mArray = std::move(other.mArray);
 
 		other.mSize = 0;
 	}
