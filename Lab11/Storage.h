@@ -51,7 +51,7 @@ namespace lab11
 	template<typename T>
 	Storage<T>::Storage(const Storage<T>& other)
 		: mSize(other.mSize)
-		, mArray(std::make_unique<T[]>(mSize))
+		, mArray(std::make_unique<T[]>(other.mSize))
 	{
 		for (unsigned int i = 0; i < mSize; ++i)
 		{
@@ -86,6 +86,8 @@ namespace lab11
 		{
 			mArray[i] = other.mArray[i];
 		}
+
+		return *this;
 	}
 
 	template<typename T>
@@ -101,6 +103,8 @@ namespace lab11
 		mArray = std::move(other.mArray);
 
 		other.mSize = 0;
+
+		return *this;
 	}
 
 	template<typename T>
