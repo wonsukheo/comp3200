@@ -38,8 +38,7 @@ namespace assignment4
 			lastNode = (*data <= *(*lastNode)->Data) ? &(*lastNode)->Left : &(*lastNode)->Right;
 		}
 
-		std::unique_ptr<TreeNode<T>> temp = previousNode == nullptr ?
-			std::make_unique<TreeNode<T>>(std::move(data)) : std::make_unique<TreeNode<T>>(*previousNode, std::move(data));
+		std::unique_ptr<TreeNode<T>> temp = previousNode == nullptr ? std::make_unique<TreeNode<T>>(std::move(data)) : std::make_unique<TreeNode<T>>(*previousNode, std::move(data));
 
 		*lastNode = std::move(temp);
 	}
