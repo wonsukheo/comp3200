@@ -28,17 +28,19 @@ namespace assignment4
 	void BinarySearchTree<T>::Insert(std::unique_ptr<T> data)
 	{
 		std::shared_ptr<TreeNode<T>>* lastNode = &mRoot;
-		
-		std::shared_ptr<TreeNode<T>>* previousNode = lastNode;
-		
+
+		std::shared_ptr<TreeNode<T>>* previousNode = nullptr;
+
 		while (*lastNode != nullptr)
 		{
 			previousNode = lastNode;
 
 			lastNode = (*data <= *(*lastNode)->Data) ? &(*lastNode)->Left : &(*lastNode)->Right;
 		}
-		
-		std::unique_ptr<TreeNode<T>> temp = std::make_unique<TreeNode<T>>(*previousNode, std::move(data));
+
+		std::unique_ptr<TreeNode<T>> temp = previousNode == nullptr ?
+			std::make_unique<TreeNode<T>>(std::move(data)) : std::make_unique<TreeNode<T>>(*previousNode, std::move(data));
+
 		*lastNode = std::move(temp);
 	}
 
@@ -72,12 +74,12 @@ namespace assignment4
 		std::shared_ptr<TreeNode<T>> nodeIter = mRoot;
 		std::shared_ptr<TreeNode<T>> previousNode;
 		std::shared_ptr<TreeNode<T>> dataNode;
-
+		//no nodes
 		if (mRoot == nullptr)
 		{
 			return false;
-		}
-
+		} 
+		//find data node
 		while (nodeIter != nullptr)
 		{
 			if (data == *nodeIter->Data)
@@ -91,23 +93,20 @@ namespace assignment4
 
 			nodeIter = (data <= *nodeIter->Data) ? nodeIter->Left : nodeIter->Right;
 		}
-
+		// no matching data
 		if (dataNode == nullptr)
 		{
 			return false;
-		}
-
-		if (dataNode == mRoot)
+		} 
+		//no leaf
+		if (dataNode->Left == nullptr && dataNode->Right == nullptr)
 		{
-			if (dataNode->Right == nullptr && dataNode->Left == nullptr)
+			if (previousNode == nullptr)
 			{
 				mRoot = nullptr;
 				return true;
 			}
-		}
 
-		if (dataNode->Left == nullptr && dataNode->Right == nullptr)
-		{
 			if (previousNode->Left == dataNode)
 			{
 				previousNode->Left = nullptr;
@@ -118,13 +117,13 @@ namespace assignment4
 			}
 
 			return true;
-		}
+		} 
 
 		if (dataNode->Left != nullptr && dataNode->Right != nullptr)
 		{
 			std::shared_ptr<TreeNode<T>> replaceNode = dataNode->Right;
 			std::shared_ptr<TreeNode<T>> prevToReplaceNode = dataNode;
-
+			//find replace node
 			while (replaceNode->Left != nullptr)
 			{
 				prevToReplaceNode = replaceNode;
@@ -185,32 +184,19 @@ namespace assignment4
 		if (previousNode == nullptr)
 		{
 			mRoot = dataNode->Left == nullptr ? dataNode->Right : dataNode->Left;
+
 			return true;
 		}
 
 		if (previousNode->Left == dataNode)
 		{
-			if (dataNode->Left == nullptr)
-			{
-				previousNode->Left = dataNode->Right;
-			}
-			else
-			{
-				previousNode->Left = dataNode->Left;
-			}
+			previousNode->Left = dataNode->Left == nullptr ? dataNode->Right : dataNode->Left;
 
 			return true;
 		}
 		else
 		{
-			if (dataNode->Left == nullptr)
-			{
-				previousNode->Right = dataNode->Right;
-			}
-			else
-			{
-				previousNode->Right = dataNode->Left;
-			}
+			previousNode->Right = dataNode->Left == nullptr ? dataNode->Right : dataNode->Left;
 
 			return true;
 		}
@@ -228,7 +214,7 @@ namespace assignment4
 		return temp;
 	}
 
-	
+
 	template<typename T>
 	void BinarySearchTree<T>::TraverseRecursive(const std::shared_ptr<TreeNode<T>> node, std::vector<T>* list)
 	{
@@ -247,28 +233,25 @@ namespace assignment4
 			TraverseRecursive(node->Right, list);
 		}
 
-		if (node != nullptr)
+
+		if (list->empty())
 		{
-			if (list->empty())
+			list->push_back(*node->Data);
+			return;
+		}
+
+		for (typename std::vector<T>::iterator iter = list->begin(); iter != list->end(); ++iter)
+		{
+			if (*node->Data <= *iter)
+			{
+				list->insert(iter, *node->Data);
+				break;
+			}
+			else if (iter == list->end() - 1)
 			{
 				list->push_back(*node->Data);
-				return;
-			}
-
-			for (typename std::vector<T>::iterator iter = list->begin(); iter != list->end(); ++iter)
-			{
-				if (*node->Data <= *iter)
-				{
-					list->insert(iter, *node->Data);
-					break;
-				}
-				else if (iter == list->end() - 1)
-				{
-					list->push_back(*node->Data);
-					break;
-				}
+				break;
 			}
 		}
 	}
-	
 }
