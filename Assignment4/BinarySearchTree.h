@@ -97,6 +97,15 @@ namespace assignment4
 			return false;
 		}
 
+		if (dataNode == mRoot)
+		{
+			if (dataNode->Right == nullptr && dataNode->Left == nullptr)
+			{
+				mRoot = nullptr;
+				return true;
+			}
+		}
+
 		if (dataNode->Left == nullptr && dataNode->Right == nullptr)
 		{
 			if (previousNode->Left == dataNode)
@@ -123,25 +132,59 @@ namespace assignment4
 				replaceNode = replaceNode->Left;
 			}
 
-			if (previousNode->Left == dataNode)
+			if (previousNode == nullptr)
 			{
-				prevToReplaceNode->Left = replaceNode->Right;
+				if (prevToReplaceNode != dataNode)
+				{
+					prevToReplaceNode->Left = replaceNode->Right;
+				}
 
 				replaceNode->Left = dataNode->Left;
 				replaceNode->Right = dataNode->Right;
+
+				mRoot = replaceNode;
+				return true;
+			}
+
+			if (previousNode->Left == dataNode)
+			{
+				if (prevToReplaceNode != dataNode)
+				{
+					prevToReplaceNode->Left = replaceNode->Right;
+				}
+
+				replaceNode->Left = dataNode->Left;
+
+				if (dataNode->Right != replaceNode)
+				{
+					replaceNode->Right = dataNode->Right;
+				}
 
 				previousNode->Left = replaceNode;
 			}
 			else
 			{
-				prevToReplaceNode->Left = replaceNode->Right;
+				if (prevToReplaceNode != dataNode)
+				{
+					prevToReplaceNode->Left = replaceNode->Right;
+				}
 
 				replaceNode->Left = dataNode->Left;
-				replaceNode->Right = dataNode->Right;
+
+				if (dataNode->Right != replaceNode)
+				{
+					replaceNode->Right = dataNode->Right;
+				}
 
 				previousNode->Right = replaceNode;
 			}
 
+			return true;
+		}
+
+		if (previousNode == nullptr)
+		{
+			mRoot = dataNode->Left == nullptr ? dataNode->Right : dataNode->Left;
 			return true;
 		}
 
@@ -189,6 +232,11 @@ namespace assignment4
 	template<typename T>
 	void BinarySearchTree<T>::TraverseRecursive(const std::shared_ptr<TreeNode<T>> node, std::vector<T>* list)
 	{
+		if (node == nullptr)
+		{
+			return;
+		}
+
 		if (node->Left != nullptr)
 		{
 			TraverseRecursive(node->Left, list);
